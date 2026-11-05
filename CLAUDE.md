@@ -7,6 +7,8 @@
 - 레거시·분석 산출물: `modernize/` 레포 (회사 PC 경로 기입 필요)
 - 명세 위치: 미정 (회사 PC에서 `modernize/` 확인 후 기입)
 - 참조 구현: 없음 (7단계 대표 화면 구현 후 기입)
+- 기술 기준: `docs/adr/0001-technical-baseline.md`
+- 반입 목록: `docs/import-list.md` (의존성을 추가할 때 함께 갱신)
 
 ## 규칙
 
