@@ -6,10 +6,22 @@
 
 ## 현재 상태
 
-기술 기준을 정한 단계입니다. 아직 애플리케이션 코드와 빌드 설정은 없습니다. 폴더는 코드가 들어가는 단계에서 만듭니다.
+BE 최소 기동까지 진행했습니다. DB, 인증, 업무 도메인은 아직 없습니다. 폴더는 코드가 들어가는 단계에서 만듭니다.
 
 - 기술 기준: [docs/adr/0001-technical-baseline.md](docs/adr/0001-technical-baseline.md)
 - 반입 목록: [docs/import-list.md](docs/import-list.md)
+
+## 실행
+
+JDK 21이 필요합니다. Gradle은 설치하지 않아도 `./gradlew`가 지정된 버전을 받아서 사용합니다.
+
+```bash
+./gradlew :backend:test     # 테스트
+./gradlew :backend:bootRun  # 실행 (기본 포트 8080)
+```
+
+- 버전 확인: `GET /api/v1/system/version`
+- 헬스 체크: `GET /actuator/health/liveness`, `/readiness`, `/startup`
 
 ## 예정 구조
 

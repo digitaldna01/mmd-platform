@@ -4,11 +4,22 @@
 
 ## 경로
 
-- 레거시·분석 산출물: `modernize/` 레포 (회사 PC 경로 기입 필요)
+- 레거시·분석 산출물: `modernize/` 레포 (회사 PC에서 `modernize/` 확인 후 기입)
 - 명세 위치: 미정 (회사 PC에서 `modernize/` 확인 후 기입)
 - 참조 구현: 없음 (7단계 대표 화면 구현 후 기입)
 - 기술 기준: `docs/adr/0001-technical-baseline.md`
 - 반입 목록: `docs/import-list.md` (의존성을 추가할 때 함께 갱신)
+
+## 명령
+
+- 테스트: `./gradlew :backend:test`
+- 실행: `./gradlew :backend:bootRun`
+
+## API 규칙
+
+- URL은 `/api/v1/...` 형식입니다.
+- 응답은 `ApiResponse`로 감싸고, 에러는 `ErrorCode`와 `ApiException`으로 처리합니다.
+- 추적 ID 헤더는 `X-Trace-Id`입니다.
 
 ## 규칙
 

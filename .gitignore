@@ -3,9 +3,7 @@
 Thumbs.db
 .idea/
 *.iml
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
+.vscode/
 
 # 비밀 정보
 .env
@@ -38,3 +36,9 @@ hs_err_pid*
 
 # Claude Code 개인 설정
 .claude/settings.local.json
+
+# 이클립스·VS Code Java 메타데이터
+.project
+.classpath
+.settings/
+.factorypath
