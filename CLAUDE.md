@@ -11,13 +11,15 @@
 - API 계약 결정: `docs/adr/0002-api-contract.md`
 - FE 기반 결정: `docs/adr/0003-frontend-foundation.md`
 - 메시징 경계 결정: `docs/adr/0004-messaging-boundary.md`
+- MCP 서버 결정: `docs/adr/0005-mcp-server.md`
 - 화면 만드는 순서: `frontend/README.md`
 - 반입 목록: `docs/import-list.md` (의존성을 추가할 때 함께 갱신)
 
 ## 명령
 
-- 테스트: `./gradlew :backend:test`
-- 실행: `./gradlew :backend:bootRun`
+- BE·MCP 테스트: `./gradlew test`
+- BE 실행: `./gradlew :backend:bootRun`
+- MCP 서버 실행: `./gradlew :mcp-server:bootRun`
 - API 스펙 갱신: `./gradlew :backend:updateOpenApi`
 - FE 코드 생성·타입 체크: `cd frontend && npm run check:api`
 - FE 테스트: `cd frontend && npm test`
@@ -37,6 +39,10 @@
 - 업무 코드는 `MmdGateway`만 호출합니다. TIBRV·Kafka 클래스는 해당 어댑터 패키지 밖에서 쓰지 않습니다.
 - 새 어댑터는 `MessageTransportContractTest`를 상속한 테스트를 통과해야 합니다.
 - 쓰기 요청은 멱등 키 없이 자동 재시도하지 않습니다.
+
+## MCP 규칙
+
+- `mcp-server/` 작업 규칙은 `mcp-server/CLAUDE.md`를 봅니다.
 
 ## 규칙
 

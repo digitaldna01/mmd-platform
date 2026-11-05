@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 rootProject.name = "mmd-platform"
 
 include("backend")
+include("mcp-server")
