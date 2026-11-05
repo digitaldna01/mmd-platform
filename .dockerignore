@@ -1,0 +1,11 @@
+.git
+.gradle
+.vscode
+**/build
+**/node_modules
+frontend/dist
+frontend/storybook-static
+frontend/src/api/generated
+deploy
+docs
+*.md

@@ -21,11 +21,21 @@
 | Spring AI | 2.0.2 | MCP 서버 | 8 |
 | OpenAPI Generator 플러그인 | 7.27.0 | BE 호출용 Java 클라이언트 생성 | 8 |
 
+컨테이너 베이스 이미지입니다.
+
+| 이미지 | 태그 | 용도 |
+| ------------------------------- | ------------------------ | ---------------- |
+| `library/eclipse-temurin` | `21.0.13_9-jdk-noble` | BE, MCP 서버 빌드 |
+| `library/eclipse-temurin` | `21.0.13_9-jre-noble` | BE, MCP 서버 실행 |
+| `library/node` | `26.13.0-bookworm-slim` | FE 빌드 |
+| `nginxinc/nginx-unprivileged` | `1.30.6-alpine` | FE, 게이트웨이 |
+
 접속 경로는 다음과 같습니다.
 
 - Gradle 배포본: `services.gradle.org`
 - Gradle 플러그인: `plugins.gradle.org`
 - 라이브러리: Maven Central
 - FE 패키지: npm 레지스트리 (전체 목록은 `frontend/package-lock.json`)
+- 컨테이너 이미지: Docker Hub (`BASE_REGISTRY`로 변경)
 
 사내 저장소를 쓰게 되면 `settings.gradle.kts`의 저장소 설정과 `gradle/wrapper/gradle-wrapper.properties`의 배포본 주소를 바꿉니다.

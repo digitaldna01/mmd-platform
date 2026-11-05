@@ -16,13 +16,14 @@
 
 ## 현재 상태
 
-공통 구조와 샘플 화면, 샘플 MCP 도구까지 만들었습니다. TIBRV 연동, 화면 배치, DB, 인증, 업무 도메인은 아직 없습니다. 폴더는 코드가 들어가는 단계에서 만듭니다.
+공통 구조와 샘플 화면, 샘플 MCP 도구, 컨테이너 구성까지 만들었습니다. TIBRV 연동, 화면 배치, DB, 인증, 업무 도메인은 아직 없습니다. 폴더는 코드가 들어가는 단계에서 만듭니다.
 
 - 기술 기준: [docs/adr/0001-technical-baseline.md](docs/adr/0001-technical-baseline.md)
 - API 계약: [docs/adr/0002-api-contract.md](docs/adr/0002-api-contract.md)
 - FE 기반: [docs/adr/0003-frontend-foundation.md](docs/adr/0003-frontend-foundation.md)
 - 메시징 경계: [docs/adr/0004-messaging-boundary.md](docs/adr/0004-messaging-boundary.md)
 - MCP 서버: [docs/adr/0005-mcp-server.md](docs/adr/0005-mcp-server.md)
+- 컨테이너 배포: [docs/adr/0006-container-deployment.md](docs/adr/0006-container-deployment.md)
 - 반입 목록: [docs/import-list.md](docs/import-list.md)
 
 ## 실행
@@ -41,7 +42,7 @@ npm run dev                 # FE 개발 서버 (http://localhost:5173)
 npm run storybook           # Storybook (http://localhost:6006)
 ```
 
-새 화면을 만드는 순서는 [frontend/README.md](frontend/README.md)에 있습니다.
+새 화면을 만드는 순서는 [frontend/README.md](frontend/README.md), 컨테이너로 전체를 띄우는 방법은 [deploy/README.md](deploy/README.md)에 있습니다.
 
 `bootRun`은 메모리 어댑터로 실행됩니다. jar를 직접 실행할 때는 `MESSAGING_ADAPTER`를 지정해야 하며, 없으면 기동에 실패합니다.
 
@@ -64,7 +65,7 @@ cd frontend && npm run check:api            # FE 코드 생성과 타입 체크
 | `contracts/` | OpenAPI 스펙 등 모듈 간 계약 | 있음 |
 | `frontend/` | 화면, 공통 그리드, 화면 액션 | 있음 |
 | `mcp-server/` | BE API를 감싸는 AI 도구 계층 | 있음 |
-| `deploy/` | Docker Compose, nginx, 환경별 설정 | 9단계 |
+| `deploy/` | Docker Compose, nginx | 있음 |
 
 분석 산출물과 레거시는 별도의 `modernizer/` 레포에 있으며 조회 전용으로 참조합니다.
 
@@ -82,7 +83,7 @@ cd frontend && npm run check:api            # FE 코드 생성과 타입 체크
 | 6 | 메시징 경계: `MmdGateway`, 전송 포트, 메모리 어댑터 | 완료 |
 | 7 | 대표 화면 1개: LOT 이력 조회를 DB부터 그리드까지 연결 | 다음 |
 | 8 | MCP 서버 뼈대와 샘플 읽기 도구 1개 | 완료 |
-| 9 | 이중화 검증: BE 2개 인스턴스 | 남음 |
+| 9 | 컨테이너 구성과 이중화 검증: BE 2개 인스턴스 | 완료 |
 
 ## 회사 PC에서 이어서 할 일
 
@@ -94,6 +95,7 @@ cd frontend && npm run check:api            # FE 코드 생성과 타입 체크
 - [ ] JDK 21, Node.js 26 설치
 - [ ] Maven Central, npm, `services.gradle.org`, `plugins.gradle.org` 접속 확인 (안 되면 [반입 목록](docs/import-list.md) 기준으로 사내 저장소에 반입)
 - [ ] 위 "실행"의 테스트 명령이 통과하는지 확인
+- [ ] `deploy/compose`를 띄우고 `check-failover.sh`로 무중단 확인 (베이스 이미지는 [사내 레지스트리](deploy/README.md) 사용)
 - [ ] `CLAUDE.md`의 `modernizer/` 경로와 명세 위치 기입
 - [ ] 기존 사내 프로젝트의 패키지 규칙이 `com.lgdisplay.mmd`와 맞는지 확인
 
@@ -108,5 +110,6 @@ cd frontend && npm run check:api            # FE 코드 생성과 타입 체크
 - [ ] 레거시 MDI 구조와 사용자의 화면 배치 습관 확인 후 화면 배치 방식 결정
 - [ ] 상용 그리드 선정 후 디자인 값과 UI 라이브러리 결정 (`frontend/src/shared/styles/tokens.css`)
 - [ ] 지원 브라우저 확정
+- [ ] 운영 로드밸런서에 readiness 연결 ([멈춘 인스턴스 감지 한계](docs/adr/0006-container-deployment.md))
 - [ ] MCP 서버 인증 방식 결정 (사용자별 OAuth 또는 서비스 계정). 인증 전에는 외부에 노출하지 않음
 - [ ] MCP 쓰기 도구의 사용자 확인 방식 결정 ([한계](docs/adr/0005-mcp-server.md))

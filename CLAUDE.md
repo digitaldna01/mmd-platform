@@ -12,6 +12,8 @@
 - FE 기반 결정: `docs/adr/0003-frontend-foundation.md`
 - 메시징 경계 결정: `docs/adr/0004-messaging-boundary.md`
 - MCP 서버 결정: `docs/adr/0005-mcp-server.md`
+- 컨테이너 배포 결정: `docs/adr/0006-container-deployment.md`
+- 배포 방법: `deploy/README.md`
 - 화면 만드는 순서: `frontend/README.md`
 - 반입 목록: `docs/import-list.md` (의존성을 추가할 때 함께 갱신)
 
@@ -25,6 +27,8 @@
 - FE 테스트: `cd frontend && npm test`
 - FE 빌드: `cd frontend && npm run build`
 - Storybook: `cd frontend && npm run storybook`
+- 전체 실행: `cd deploy/compose && docker compose up -d --build --wait`
+- 무중단 검증: `deploy/compose/check-failover.sh`
 
 ## API 규칙
 
