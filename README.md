@@ -4,9 +4,19 @@
 
 기반 항목 전체는 `MMD 현대화 엔터프라이즈급 기반 체크리스트.md`에 있습니다.
 
+> [!WARNING]
+> **이 GitHub 저장소는 공개 저장소입니다.** 회사 코드와 자료를 여기에 push하면 그대로 공개됩니다. 회사 PC에서는 clone 직후 원격을 사내 Git으로 바꿉니다.
+>
+> ```bash
+> git clone https://github.com/digitaldna01/mmd-platform.git
+> cd mmd-platform
+> git remote remove origin
+> git remote add origin <사내 Git 주소>
+> ```
+
 ## 현재 상태
 
-메시징 경계까지 진행했습니다. TIBRV 연동, 화면 배치, DB, 인증, 업무 도메인은 아직 없습니다. 폴더는 코드가 들어가는 단계에서 만듭니다.
+공통 구조와 샘플 화면까지 만들었습니다. TIBRV 연동, 화면 배치, DB, 인증, 업무 도메인은 아직 없습니다. 폴더는 코드가 들어가는 단계에서 만듭니다.
 
 - 기술 기준: [docs/adr/0001-technical-baseline.md](docs/adr/0001-technical-baseline.md)
 - API 계약: [docs/adr/0002-api-contract.md](docs/adr/0002-api-contract.md)
@@ -43,16 +53,16 @@ API를 바꿨을 때는 다음 순서로 계약을 갱신합니다.
 cd frontend && npm run check:api            # FE 코드 생성과 타입 체크
 ```
 
-## 예정 구조
+## 구조
 
-| 폴더 | 역할 | 만드는 단계 |
+| 폴더 | 역할 | 상태 |
 | ------------- | ------------------------------------------------- | ---- |
-| `docs/` | 결정 기록(ADR), 규칙, 운영 문서 | 2 |
-| `backend/` | 조회, 화면 업무 로직, TIBRV 변환 | 3 |
-| `contracts/` | OpenAPI 스펙 등 모듈 간 계약 | 4 |
-| `frontend/` | 화면, 공통 그리드, 화면 액션 | 4 (최소 구성), 5 |
-| `mcp-server/` | BE API를 감싸는 AI 도구 계층 | 8 |
-| `deploy/` | Docker Compose, nginx, 환경별 설정 | 9 |
+| `docs/` | 결정 기록(ADR), 규칙, 운영 문서 | 있음 |
+| `backend/` | 조회, 화면 업무 로직, TIBRV 변환 | 있음 |
+| `contracts/` | OpenAPI 스펙 등 모듈 간 계약 | 있음 |
+| `frontend/` | 화면, 공통 그리드, 화면 액션 | 있음 |
+| `mcp-server/` | BE API를 감싸는 AI 도구 계층 | 8단계 |
+| `deploy/` | Docker Compose, nginx, 환경별 설정 | 9단계 |
 
 분석 산출물과 레거시는 별도의 `modernizer/` 레포에 있으며 조회 전용으로 참조합니다.
 
@@ -60,26 +70,39 @@ cd frontend && npm run check:api            # FE 코드 생성과 타입 체크
 
 각 단계는 필요한 폴더만 만들고, 동작을 확인하고, 검토받은 뒤 커밋합니다.
 
-1. 레포 시작: 루트 설정, README, CLAUDE.md
-2. 구조 결정 기록: Java 버전, 빌드 도구, MCP 스택, Java 패키지명
-3. BE 최소 기동: 헬스 체크, 버전 API, 표준 응답·에러, 추적 ID
-4. API 계약 연결: OpenAPI 생성, FE 타입 생성, 최소 `frontend/`
-5. FE 기반: React, 화면 등록부, 공통 에러 처리, Storybook
-6. 메시징 경계: `MmdGateway`, 전송 포트, 메모리 어댑터
-7. 대표 화면 1개: LOT 이력 조회를 DB부터 그리드까지 연결
-8. MCP 읽기 도구 1개
-9. 이중화 검증: BE 2개 인스턴스
+| 단계 | 내용 | 상태 |
+| ---- | ---------------------------------------------------------- | ---- |
+| 1 | 레포 시작: 루트 설정, README, CLAUDE.md | 완료 |
+| 2 | 구조 결정 기록: Java 버전, 빌드 도구, MCP 스택, Java 패키지명 | 완료 |
+| 3 | BE 최소 기동: 헬스 체크, 버전 API, 표준 응답·에러, 추적 ID | 완료 |
+| 4 | API 계약 연결: OpenAPI 생성, FE 타입 생성 | 완료 |
+| 5 | FE 기반: React, 화면 등록부, 공통 에러 처리, Storybook | 완료 |
+| 6 | 메시징 경계: `MmdGateway`, 전송 포트, 메모리 어댑터 | 완료 |
+| 7 | 대표 화면 1개: LOT 이력 조회를 DB부터 그리드까지 연결 | 다음 |
+| 8 | MCP 읽기 도구 1개 | 남음 |
+| 9 | 이중화 검증: BE 2개 인스턴스 | 남음 |
 
-## 작업 환경
+## 회사 PC에서 이어서 할 일
 
-레거시와 사내 시스템이 필요 없는 2~6단계는 개인 PC에서 진행합니다. 7단계와 TIBRV, Oracle, 상용 그리드 연동은 회사 PC에서 진행합니다.
+위 순서대로 진행합니다. 체크리스트의 나머지 항목은 7단계 이후에 필요한 시점에 다룹니다.
 
-회사 PC에서 할 일:
+**시작 준비**
 
-- [ ] `git clone`으로 레포 받기
+- [ ] 맨 위 안내대로 clone하고 원격을 사내 Git으로 변경
+- [ ] JDK 21, Node.js 26 설치
+- [ ] Maven Central, npm, `services.gradle.org`, `plugins.gradle.org` 접속 확인 (안 되면 [반입 목록](docs/import-list.md) 기준으로 사내 저장소에 반입)
+- [ ] 위 "실행"의 테스트 명령이 통과하는지 확인
 - [ ] `CLAUDE.md`의 `modernizer/` 경로와 명세 위치 기입
+- [ ] 기존 사내 프로젝트의 패키지 규칙이 `com.lgdisplay.mmd`와 맞는지 확인
+
+**TIBRV 연동**
+
 - [ ] TIBRV 라이브러리를 Java 21에서 테스트
 - [ ] MMD 서버 규격(subject 규칙, 메시지 형식) 확인
 - [ ] `TibrvAdapter` 구현 ([추가 절차](docs/adr/0004-messaging-boundary.md))
-- [ ] 기존 사내 프로젝트의 패키지 규칙이 `com.lgdisplay.mmd`와 맞는지 확인
-- [ ] Maven Central, npm 접속 가능 여부 확인 (안 되면 반입 목록 기준으로 사내 저장소에 반입)
+
+**미확정 결정**
+
+- [ ] 레거시 MDI 구조와 사용자의 화면 배치 습관 확인 후 화면 배치 방식 결정
+- [ ] 상용 그리드 선정 후 디자인 값과 UI 라이브러리 결정 (`frontend/src/shared/styles/tokens.css`)
+- [ ] 지원 브라우저 확정
