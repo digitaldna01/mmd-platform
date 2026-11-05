@@ -1,0 +1,40 @@
+# OS·에디터
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# 비밀 정보
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.jks
+*.p12
+
+# 로그
+*.log
+
+# Node
+node_modules/
+dist/
+coverage/
+.vite/
+playwright-report/
+test-results/
+
+# Gradle·Maven·Java
+.gradle/
+build/
+target/
+out/
+bin/
+*.class
+hs_err_pid*
+
+# Claude Code 개인 설정
+.claude/settings.local.json
