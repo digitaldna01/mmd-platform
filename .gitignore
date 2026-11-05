@@ -34,6 +34,9 @@ bin/
 *.class
 hs_err_pid*
 
+# 빌드 때 생성되는 코드 (스펙 원본은 contracts/openapi/)
+frontend/src/api/generated/
+
 # Claude Code 개인 설정
 .claude/settings.local.json
 

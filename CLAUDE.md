@@ -8,18 +8,23 @@
 - 명세 위치: 미정 (회사 PC에서 `modernizer/` 확인 후 기입)
 - 참조 구현: 없음 (7단계 대표 화면 구현 후 기입)
 - 기술 기준: `docs/adr/0001-technical-baseline.md`
+- API 계약 결정: `docs/adr/0002-api-contract.md`
 - 반입 목록: `docs/import-list.md` (의존성을 추가할 때 함께 갱신)
 
 ## 명령
 
 - 테스트: `./gradlew :backend:test`
 - 실행: `./gradlew :backend:bootRun`
+- API 스펙 갱신: `./gradlew :backend:updateOpenApi`
+- FE 코드 생성·타입 체크: `cd frontend && npm run check:api`
 
 ## API 규칙
 
 - URL은 `/api/v1/...` 형식입니다.
 - 응답은 `ApiResponse`로 감싸고, 에러는 `ErrorCode`와 `ApiException`으로 처리합니다.
 - 추적 ID 헤더는 `X-Trace-Id`입니다.
+- `contracts/openapi/backend.json`은 손으로 고치지 않습니다. API를 바꾸면 스펙을 갱신해 함께 커밋합니다.
+- FE는 생성된 API 함수만 씁니다. `frontend/src/api/client.ts` 밖에서 직접 fetch하지 않습니다.
 
 ## 규칙
 

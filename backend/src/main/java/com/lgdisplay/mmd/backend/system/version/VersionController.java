@@ -16,7 +16,7 @@ public class VersionController {
     }
 
     @GetMapping("/api/v1/system/version")
-    public ApiResponse<VersionResponse> version() {
+    public ApiResponse<VersionResponse> getVersion() {
         // IDE에서 직접 실행하면 빌드 정보 파일이 없을 수 있습니다.
         BuildProperties properties = buildProperties.getIfAvailable();
         String version = properties != null ? properties.getVersion() : "unknown";

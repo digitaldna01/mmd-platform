@@ -23,6 +23,13 @@ management:
         startup:
           include: readinessState
 
+springdoc:
+  api-docs:
+    enabled: ${OPENAPI_DOCS_ENABLED:false}
+  default-produces-media-type: application/json
+  writer-with-default-pretty-printer: true
+  writer-with-order-by-keys: true
+
 logging:
   structured:
     format:

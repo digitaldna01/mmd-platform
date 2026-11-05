@@ -6,14 +6,15 @@
 
 ## 현재 상태
 
-BE 최소 기동까지 진행했습니다. DB, 인증, 업무 도메인은 아직 없습니다. 폴더는 코드가 들어가는 단계에서 만듭니다.
+API 계약 연결까지 진행했습니다. React 화면, DB, 인증, 업무 도메인은 아직 없습니다. 폴더는 코드가 들어가는 단계에서 만듭니다.
 
 - 기술 기준: [docs/adr/0001-technical-baseline.md](docs/adr/0001-technical-baseline.md)
+- API 계약: [docs/adr/0002-api-contract.md](docs/adr/0002-api-contract.md)
 - 반입 목록: [docs/import-list.md](docs/import-list.md)
 
 ## 실행
 
-JDK 21이 필요합니다. Gradle은 설치하지 않아도 `./gradlew`가 지정된 버전을 받아서 사용합니다.
+JDK 21과 Node.js 26이 필요합니다. Gradle은 설치하지 않아도 `./gradlew`가 지정된 버전을 받아서 사용합니다.
 
 ```bash
 ./gradlew :backend:test     # 테스트
@@ -23,6 +24,13 @@ JDK 21이 필요합니다. Gradle은 설치하지 않아도 `./gradlew`가 지�
 - 버전 확인: `GET /api/v1/system/version`
 - 헬스 체크: `GET /actuator/health/liveness`, `/readiness`, `/startup`
 
+API를 바꿨을 때는 다음 순서로 계약을 갱신합니다.
+
+```bash
+./gradlew :backend:updateOpenApi            # contracts/openapi/backend.json 갱신
+cd frontend && npm ci && npm run check:api  # FE 코드 생성과 타입 체크
+```
+
 ## 예정 구조
 
 | 폴더 | 역할 | 만드는 단계 |
@@ -30,7 +38,7 @@ JDK 21이 필요합니다. Gradle은 설치하지 않아도 `./gradlew`가 지�
 | `docs/` | 결정 기록(ADR), 규칙, 운영 문서 | 2 |
 | `backend/` | 조회, 화면 업무 로직, TIBRV 변환 | 3 |
 | `contracts/` | OpenAPI 스펙 등 모듈 간 계약 | 4 |
-| `frontend/` | 화면, 공통 그리드, 화면 액션 | 5 |
+| `frontend/` | 화면, 공통 그리드, 화면 액션 | 4 (최소 구성), 5 |
 | `mcp-server/` | BE API를 감싸는 AI 도구 계층 | 8 |
 | `deploy/` | Docker Compose, nginx, 환경별 설정 | 9 |
 
@@ -43,8 +51,8 @@ JDK 21이 필요합니다. Gradle은 설치하지 않아도 `./gradlew`가 지�
 1. 레포 시작: 루트 설정, README, CLAUDE.md
 2. 구조 결정 기록: Java 버전, 빌드 도구, MCP 스택, Java 패키지명
 3. BE 최소 기동: 헬스 체크, 버전 API, 표준 응답·에러, 추적 ID
-4. API 계약 연결: OpenAPI 생성, FE 타입 생성
-5. FE 최소 골격: 레이아웃, 생성 클라이언트
+4. API 계약 연결: OpenAPI 생성, FE 타입 생성, 최소 `frontend/`
+5. FE 최소 골격: React, 레이아웃, 공통 에러 처리
 6. 메시징 경계: `MmdGateway`, 전송 포트, 메모리 어댑터
 7. 대표 화면 1개: LOT 이력 조회를 DB부터 그리드까지 연결
 8. MCP 읽기 도구 1개
