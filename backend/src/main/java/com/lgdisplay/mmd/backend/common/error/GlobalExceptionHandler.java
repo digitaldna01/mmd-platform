@@ -17,6 +17,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ApiException.class)
     ResponseEntity<Object> handleApiException(ApiException ex) {
         ErrorCode errorCode = ex.errorCode();
+        if (errorCode.status().is5xxServerError()) {
+            logger.error("api exception", ex);
+            return toResponse(errorCode.status(), new HttpHeaders(), errorCode, null);
+        }
         return toResponse(errorCode.status(), new HttpHeaders(), errorCode, ex.getMessage());
     }
 

@@ -1,5 +1,6 @@
 package com.lgdisplay.mmd.backend.common.error;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -8,11 +9,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.lgdisplay.mmd.backend.messaging.model.MessagingTimeoutException;
+import com.lgdisplay.mmd.backend.messaging.model.MessagingUnavailableException;
+import java.time.Duration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,8 +76,42 @@ class GlobalExceptionHandlerTest {
                 .andExpect(jsonPath("$.traceId", notNullValue()));
     }
 
+    @Test
+    void messagingTimeoutHidesSubject() throws Exception {
+        mockMvc.perform(get("/test/messaging-timeout"))
+                .andExpect(status().isGatewayTimeout())
+                .andExpect(jsonPath("$.error.code").value("MESSAGING-504"))
+                .andExpect(jsonPath("$.error.message").value(ErrorCode.MESSAGING_TIMEOUT.message()))
+                .andExpect(jsonPath("$.error.detail").doesNotExist())
+                .andExpect(jsonPath("$.traceId", notNullValue()));
+    }
+
+    @Test
+    void messagingUnavailableHidesSubject() throws Exception {
+        mockMvc.perform(get("/test/messaging-unavailable"))
+                .andExpect(status().isServiceUnavailable())
+                .andExpect(jsonPath("$.error.code").value("MESSAGING-503"))
+                .andExpect(jsonPath("$.error.detail").doesNotExist());
+    }
+
+    @Test
+    void springErrorsAreNotReportedAsMessagingErrors() {
+        assertThat(ErrorCode.from(HttpStatus.SERVICE_UNAVAILABLE)).isEqualTo(ErrorCode.INTERNAL_ERROR);
+        assertThat(ErrorCode.from(HttpStatus.GATEWAY_TIMEOUT)).isEqualTo(ErrorCode.INTERNAL_ERROR);
+    }
+
     @RestController
     static class FailingController {
+
+        @GetMapping("/test/messaging-timeout")
+        void messagingTimeout() {
+            throw new MessagingTimeoutException("mmd.lot.track-in", Duration.ofSeconds(10));
+        }
+
+        @GetMapping("/test/messaging-unavailable")
+        void messagingUnavailable() {
+            throw new MessagingUnavailableException("mmd.lot.track-in");
+        }
 
         @GetMapping("/test/api-exception")
         void apiException() {

@@ -9,6 +9,7 @@
 | Spring Boot 플러그인 | 4.1.2 | 빌드 | 3 |
 | Spring Boot | 4.1.2 | BE, MCP 서버 | 3 |
 | springdoc-openapi | 3.2.0 | OpenAPI 스펙 생성 | 4 |
+| ArchUnit | 1.5.1 | 메시징 경계 테스트 | 6 |
 | Node.js | 26 LTS | FE 빌드 | 4 |
 | Orval | 8.46.0 | FE API 코드 생성 | 4 |
 | TypeScript | 7.0.2 | FE 타입 체크 | 4 |

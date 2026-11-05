@@ -23,6 +23,11 @@ management:
         startup:
           include: readinessState
 
+mmd:
+  messaging:
+    adapter: ${MESSAGING_ADAPTER:}
+    request-timeout: ${MESSAGING_REQUEST_TIMEOUT:10s}
+
 springdoc:
   api-docs:
     enabled: ${OPENAPI_DOCS_ENABLED:false}

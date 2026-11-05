@@ -10,6 +10,7 @@
 - 기술 기준: `docs/adr/0001-technical-baseline.md`
 - API 계약 결정: `docs/adr/0002-api-contract.md`
 - FE 기반 결정: `docs/adr/0003-frontend-foundation.md`
+- 메시징 경계 결정: `docs/adr/0004-messaging-boundary.md`
 - 화면 만드는 순서: `frontend/README.md`
 - 반입 목록: `docs/import-list.md` (의존성을 추가할 때 함께 갱신)
 
@@ -30,6 +31,12 @@
 - 추적 ID 헤더는 `X-Trace-Id`입니다.
 - `contracts/openapi/backend.json`은 손으로 고치지 않습니다. API를 바꾸면 스펙을 갱신해 함께 커밋합니다.
 - FE는 생성된 API 함수만 씁니다. `frontend/src/api/client.ts` 밖에서 직접 fetch하지 않습니다.
+
+## 메시징 규칙
+
+- 업무 코드는 `MmdGateway`만 호출합니다. TIBRV·Kafka 클래스는 해당 어댑터 패키지 밖에서 쓰지 않습니다.
+- 새 어댑터는 `MessageTransportContractTest`를 상속한 테스트를 통과해야 합니다.
+- 쓰기 요청은 멱등 키 없이 자동 재시도하지 않습니다.
 
 ## 규칙
 

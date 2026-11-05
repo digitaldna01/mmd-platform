@@ -6,11 +6,12 @@
 
 ## 현재 상태
 
-새 화면을 바로 만들 수 있는 FE 기반까지 진행했습니다. 화면 배치, DB, 인증, 업무 도메인은 아직 없습니다. 폴더는 코드가 들어가는 단계에서 만듭니다.
+메시징 경계까지 진행했습니다. TIBRV 연동, 화면 배치, DB, 인증, 업무 도메인은 아직 없습니다. 폴더는 코드가 들어가는 단계에서 만듭니다.
 
 - 기술 기준: [docs/adr/0001-technical-baseline.md](docs/adr/0001-technical-baseline.md)
 - API 계약: [docs/adr/0002-api-contract.md](docs/adr/0002-api-contract.md)
 - FE 기반: [docs/adr/0003-frontend-foundation.md](docs/adr/0003-frontend-foundation.md)
+- 메시징 경계: [docs/adr/0004-messaging-boundary.md](docs/adr/0004-messaging-boundary.md)
 - 반입 목록: [docs/import-list.md](docs/import-list.md)
 
 ## 실행
@@ -29,6 +30,8 @@ npm run storybook           # Storybook (http://localhost:6006)
 ```
 
 새 화면을 만드는 순서는 [frontend/README.md](frontend/README.md)에 있습니다.
+
+`bootRun`은 메모리 어댑터로 실행됩니다. jar를 직접 실행할 때는 `MESSAGING_ADAPTER`를 지정해야 하며, 없으면 기동에 실패합니다.
 
 - 버전 확인: `GET /api/v1/system/version`
 - 헬스 체크: `GET /actuator/health/liveness`, `/readiness`, `/startup`
@@ -76,5 +79,7 @@ cd frontend && npm run check:api            # FE 코드 생성과 타입 체크
 - [ ] `git clone`으로 레포 받기
 - [ ] `CLAUDE.md`의 `modernizer/` 경로와 명세 위치 기입
 - [ ] TIBRV 라이브러리를 Java 21에서 테스트
+- [ ] MMD 서버 규격(subject 규칙, 메시지 형식) 확인
+- [ ] `TibrvAdapter` 구현 ([추가 절차](docs/adr/0004-messaging-boundary.md))
 - [ ] 기존 사내 프로젝트의 패키지 규칙이 `com.lgdisplay.mmd`와 맞는지 확인
 - [ ] Maven Central, npm 접속 가능 여부 확인 (안 되면 반입 목록 기준으로 사내 저장소에 반입)

@@ -23,7 +23,14 @@ dependencies {
 
     testImplementation(platform(libs.spring.boot.bom))
     testImplementation(libs.spring.boot.starter.webmvc.test)
+    testImplementation(libs.archunit)
     testRuntimeOnly(libs.junit.platform.launcher)
+}
+
+tasks.bootRun {
+    if (System.getenv("MESSAGING_ADAPTER") == null) {
+        environment("MESSAGING_ADAPTER", "memory")
+    }
 }
 
 tasks.withType<Test>().configureEach {
