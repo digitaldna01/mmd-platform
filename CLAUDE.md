@@ -9,6 +9,8 @@
 - 참조 구현: 없음 (7단계 대표 화면 구현 후 기입)
 - 기술 기준: `docs/adr/0001-technical-baseline.md`
 - API 계약 결정: `docs/adr/0002-api-contract.md`
+- FE 기반 결정: `docs/adr/0003-frontend-foundation.md`
+- 화면 만드는 순서: `frontend/README.md`
 - 반입 목록: `docs/import-list.md` (의존성을 추가할 때 함께 갱신)
 
 ## 명령
@@ -17,6 +19,9 @@
 - 실행: `./gradlew :backend:bootRun`
 - API 스펙 갱신: `./gradlew :backend:updateOpenApi`
 - FE 코드 생성·타입 체크: `cd frontend && npm run check:api`
+- FE 테스트: `cd frontend && npm test`
+- FE 빌드: `cd frontend && npm run build`
+- Storybook: `cd frontend && npm run storybook`
 
 ## API 규칙
 

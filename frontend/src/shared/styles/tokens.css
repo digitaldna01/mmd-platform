@@ -1,0 +1,19 @@
+/* 임시 값입니다. 상용 그리드와 디자인을 정하면 이 값을 바꿉니다. */
+:root {
+  --color-text: #1f2933;
+  --color-muted: #616e7c;
+  --color-danger: #b42318;
+  --color-danger-bg: #fef3f2;
+  --space-2: 8px;
+  --space-4: 16px;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 18px;
+}
+
+body {
+  margin: 0;
+  color: var(--color-text);
+  font-family: system-ui, sans-serif;
+  font-size: var(--font-size-md);
+}

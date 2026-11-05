@@ -12,6 +12,11 @@
 | Node.js | 26 LTS | FE 빌드 | 4 |
 | Orval | 8.46.0 | FE API 코드 생성 | 4 |
 | TypeScript | 7.0.2 | FE 타입 체크 | 4 |
+| React, React DOM | 19.3.1 | FE | 5 |
+| Vite | 8.3.6 | FE 빌드 | 5 |
+| TanStack Query | 5.106.1 | FE 서버 상태 | 5 |
+| Storybook | 10.6.5 | 컴포넌트 개발 | 5 |
+| Vitest, jsdom, Testing Library | 5.1.0, 31.0.0, 16.3.3 | FE 테스트 | 5 |
 | Spring AI | 2.0.x | MCP 서버 | 8 |
 
 접속 경로는 다음과 같습니다.

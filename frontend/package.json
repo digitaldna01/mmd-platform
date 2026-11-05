@@ -9,10 +9,31 @@
   "scripts": {
     "generate": "orval --config orval.config.ts",
     "typecheck": "tsc --noEmit",
-    "check:api": "npm run generate && npm run typecheck"
+    "check:api": "npm run generate && npm run typecheck",
+    "prepare": "npm run generate",
+    "dev": "vite",
+    "build": "npm run typecheck && vite build",
+    "test": "vitest run",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
+    "@storybook/react-vite": "10.6.5",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.2.1",
+    "jsdom": "31.0.0",
     "orval": "8.46.0",
-    "typescript": "7.0.2"
+    "storybook": "10.6.5",
+    "typescript": "7.0.2",
+    "vite": "8.3.6",
+    "vitest": "5.1.0"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "5.106.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   }
 }

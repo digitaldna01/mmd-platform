@@ -45,3 +45,6 @@ frontend/src/api/generated/
 .classpath
 .settings/
 .factorypath
+
+# Storybook 빌드 결과
+storybook-static/

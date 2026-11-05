@@ -7,9 +7,12 @@ export default defineConfig({
     },
     output: {
       target: "src/api/generated/backend.ts",
-      client: "fetch",
+      client: "react-query",
       mode: "single",
       override: {
+        fetch: {
+          includeHttpResponseReturnType: false,
+        },
         mutator: {
           path: "src/api/client.ts",
           name: "apiRequest",
