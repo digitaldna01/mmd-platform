@@ -34,7 +34,7 @@ JDK 21이 필요합니다. Gradle은 설치하지 않아도 `./gradlew`가 지�
 | `mcp-server/` | BE API를 감싸는 AI 도구 계층 | 8 |
 | `deploy/` | Docker Compose, nginx, 환경별 설정 | 9 |
 
-분석 산출물과 레거시는 별도의 `modernize/` 레포에 있으며 조회 전용으로 참조합니다.
+분석 산출물과 레거시는 별도의 `modernizer/` 레포에 있으며 조회 전용으로 참조합니다.
 
 ## 진행 순서
 
@@ -57,7 +57,7 @@ JDK 21이 필요합니다. Gradle은 설치하지 않아도 `./gradlew`가 지�
 회사 PC에서 할 일:
 
 - [ ] `git clone`으로 레포 받기
-- [ ] `CLAUDE.md`의 `modernize/` 경로와 명세 위치 기입
+- [ ] `CLAUDE.md`의 `modernizer/` 경로와 명세 위치 기입
 - [ ] TIBRV 라이브러리를 Java 21에서 테스트
 - [ ] 기존 사내 프로젝트의 패키지 규칙이 `com.lgdisplay.mmd`와 맞는지 확인
 - [ ] Maven Central, npm 접속 가능 여부 확인 (안 되면 반입 목록 기준으로 사내 저장소에 반입)

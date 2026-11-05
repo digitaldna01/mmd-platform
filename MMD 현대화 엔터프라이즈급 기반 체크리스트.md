@@ -8,7 +8,7 @@ Oct 31, 2026 · @한슬
 
 레포와 API 계약 방식을 먼저 정해야 FE와 BE가 같은 규칙으로 움직입니다.
 
-- [ ] 모노레포 구성: frontend/, backend/, mcp-server/ (분석 산출물과 레거시는 modernize/ 레포에서 조회 전용으로 참조)
+- [ ] 모노레포 구성: frontend/, backend/, mcp-server/ (분석 산출물과 레거시는 modernizer/ 레포에서 조회 전용으로 참조)
 - [ ] API 계약: springdoc으로 OpenAPI 생성 → FE TypeScript 타입과 API 함수 자동 생성
 - [ ] API 규칙: URL 체계, HTTP 메서드, 페이징·정렬 파라미터, 날짜 형식(ISO 8601, 시간대)
 - [ ] 표준 응답과 에러 형식: 에러 코드 체계, 사용자 메시지와 개발자 메시지 분리
