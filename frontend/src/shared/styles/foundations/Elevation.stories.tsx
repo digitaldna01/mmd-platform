@@ -14,8 +14,8 @@ type Story = StoryObj<typeof meta>;
 const layers = [
   { token: "z-sticky", value: 10, use: "고정 머리글" },
   { token: "z-dock", value: 20, use: "도킹 패널" },
-  { token: "z-popover", value: 30, use: "드롭다운, 메뉴" },
-  { token: "z-dialog", value: 40, use: "다이얼로그" },
+  { token: "z-dialog", value: 30, use: "다이얼로그, 서랍" },
+  { token: "z-popover", value: 40, use: "드롭다운, 메뉴 (다이얼로그 안에서도 열림)" },
   { token: "z-toast", value: 50, use: "토스트" },
   { token: "z-tooltip", value: 60, use: "툴팁 (다이얼로그와 토스트 안의 버튼에도 뜸)" },
 ];

@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { UiProvider } from "../shared/ui/UiProvider";
 import { ScreenHost } from "./ScreenHost";
 
 const queryClient = new QueryClient({
@@ -13,7 +14,9 @@ const queryClient = new QueryClient({
 export function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ScreenHost screenId="system.info" />
+      <UiProvider>
+        <ScreenHost screenId="system.info" />
+      </UiProvider>
     </QueryClientProvider>
   );
 }

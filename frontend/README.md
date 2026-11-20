@@ -54,6 +54,9 @@ npm ci
 - CSS에 `#fff`, `12px`, `150ms` 같은 값을 직접 쓰면 `npm run lint:css`(빌드에 포함)가 막습니다. 필요한 값이 토큰에 없으면 검사를 끄지 말고 토큰을 더합니다(디자인 가이드 'CSS 검사').
 - `tokens.css`는 `scripts/build-tokens.mjs`가 만듭니다. 손으로 고치지 않고, 값을 바꿀 때는 디자인 가이드와 스크립트를 함께 고친 뒤 `npm run tokens`를 실행합니다.
 - 버튼은 `shared/ui/Button`으로만 씁니다. `<button>`을 직접 쓰지 않습니다. 비활성은 `disabledReason`, 처리 중은 `busy`, 아이콘만 있는 버튼은 `icon`과 `label`로 만듭니다. Storybook '컴포넌트/버튼'에 쓰는 법과 놓는 자리가 있습니다.
+- 입력창은 `shared/ui/TextInput`, 선택 상자는 `shared/ui/Select`로만 씁니다. `<input>`, `<select>`, `<textarea>`를 직접 쓰지 않습니다. 비워도 되는 선택 상자는 `emptyLabel`(조회 조건 '전체', 폼 '없음')을 줍니다. Storybook '컴포넌트/입력창과 선택 상자'에 조회 조건과 상세 폼 예가 있습니다.
+- React Aria(`react-aria-components`)는 `shared/ui` 안에서만 가져옵니다. 화면에 필요한 컴포넌트가 없으면 `shared/ui`에 감싼 컴포넌트를 먼저 만듭니다(ADR-0007).
+- `npm test`의 `shared/ui/boundaries.test.ts`가 위 두 규칙(직접 쓴 `<button>`·`<input>`·`<select>`·`<textarea>`, `shared/ui` 밖의 React Aria)을 검사합니다.
 - 툴팁은 `shared/ui/Tooltip`으로, 기다림 표시는 `shared/ui/useDelayedBusy`와 `Spinner`로 씁니다.
 - 아이콘은 `shared/icons/Icon`으로만 씁니다(`<Icon name="search" />`). 새 아이콘은 `scripts/build-icons.mjs`의 목록과 디자인 가이드의 표에 함께 더하고 `npm run icons`를 실행합니다. SVG를 직접 붙여 넣지 않습니다.
 - 날짜, 시각, 숫자, 빈 값은 `shared/format`의 함수로만 화면에 씁니다(`formatDateTime`, `formatNumber` 등). 문구와 용어는 디자인 가이드의 '표기와 문구'를 따릅니다.

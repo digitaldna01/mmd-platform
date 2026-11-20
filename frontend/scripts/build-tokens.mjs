@@ -223,7 +223,9 @@ const scales = `
   --nav-width: 232px; --dock-width: 360px; --form-max-width: 960px;
 
   /* 컴포넌트 치수: 컴포넌트 CSS에 px를 쓰지 않도록 여기에 둡니다 */
-  --tooltip-max-width: 320px;
+  --tooltip-max-width: 320px; --list-max-width: 360px;
+  --query-field-min-width: 150px; --query-field-max-width: 220px; /* 조회 조건 칸 폭: 내용에 맞춰 이 사이 */
+  --form-column-min-width: 180px; /* 상세 폼의 열 */
 
   /* 모션: 화면이 바뀐 것을 알릴 때만. 상태 색 80ms, 떠 있는 것의 페이드 150ms, 서랍과 들어오는 패널 200ms */
   --duration-fast: 80ms; --duration-normal: 150ms; --duration-slow: 200ms;
@@ -232,8 +234,8 @@ const scales = `
   --ease-in: cubic-bezier(0.4, 0, 1, 1);  /* 사라질 때 */
 
   /* 층 순서 */
-  /* 툴팁은 다이얼로그와 토스트 안의 버튼에도 뜨므로 맨 위입니다 */
-  --z-sticky: 10; --z-dock: 20; --z-popover: 30; --z-dialog: 40; --z-toast: 50; --z-tooltip: 60;
+  /* 드롭다운은 다이얼로그 안에서도 열리므로 다이얼로그 위, 툴팁은 토스트 안의 버튼에도 뜨므로 맨 위입니다 */
+  --z-sticky: 10; --z-dock: 20; --z-dialog: 30; --z-popover: 40; --z-toast: 50; --z-tooltip: 60;
 `;
 // 크기 조정에 따라 바뀌는 값: [토큰, 기준 px, 단계마다 더하는 px]
 const sized = [

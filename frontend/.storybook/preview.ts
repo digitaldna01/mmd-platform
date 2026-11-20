@@ -1,6 +1,7 @@
 import type { Preview } from "@storybook/react-vite";
 import { createElement, Fragment } from "react";
 import "../src/shared/styles/global.css";
+import { UiProvider } from "../src/shared/ui/UiProvider";
 
 /**
  * 도구 막대에서 테마, 글자 크기, 모니터를 바꿔 모든 스토리를 확인합니다.
@@ -55,7 +56,7 @@ const preview: Preview = {
       setFlag(root, "screen", globals.screen === "wide" ? "wide" : undefined);
       // 설정을 바꾸면 스토리를 새로 그려 계산된 값을 다시 읽게 합니다
       const key = `${globals.theme}-${globals.textSize}-${globals.screen}`;
-      return createElement(Fragment, { key }, Story());
+      return createElement(Fragment, { key }, createElement(UiProvider, null, Story()));
     },
   ],
 };

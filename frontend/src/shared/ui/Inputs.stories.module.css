@@ -1,0 +1,83 @@
+/* 입력창 스토리의 맥락 그림(상태 표, 조회 조건, 상세 폼). 칸이 놓이는 자리를 보여 주기 위한 것입니다 */
+.kind {
+  width: 1%;
+  padding-top: var(--space-4);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.cell {
+  width: var(--query-field-max-width);
+  vertical-align: top;
+}
+
+/* 조회 조건: 칸 폭 150~220px, 버튼은 마지막 칸 바로 뒤 */
+.query {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--gap-field-y) var(--gap-field-x);
+  padding: var(--pad-panel);
+  background: var(--bg-sunken);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.queryField {
+  flex: 1 1 var(--query-field-min-width);
+  min-width: 0;
+  max-width: var(--query-field-max-width);
+}
+
+/* 버튼은 칸 줄(라벨 아래)에 맞춥니다 */
+.queryButtons {
+  display: flex;
+  gap: var(--gap-buttons);
+  padding-top: calc(var(--text-xs) * var(--leading-xs) + var(--gap-label));
+}
+
+.form {
+  display: grid;
+  gap: var(--space-3);
+  max-width: var(--form-max-width);
+  padding: var(--pad-panel);
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.formHead {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+}
+
+.formHead span {
+  color: var(--text-muted);
+  font-weight: var(--weight-regular);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--form-column-min-width), 1fr));
+  gap: var(--gap-field-y) var(--gap-field-x);
+}
+
+.span2 {
+  grid-column: span 2;
+}
+
+.foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap-buttons);
+}
+
+.log {
+  min-height: var(--row-height);
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
