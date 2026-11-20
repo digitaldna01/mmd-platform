@@ -287,6 +287,7 @@ const tokens = [
   ["duration-fast", "80ms", "상태 색: 마우스 올림, 누름, 체크, 그리드 행"],
   ["duration-normal", "150ms", "떠 있는 것의 페이드: 드롭다운, 툴팁, 토스트, 확인 창, 막. 조회 중 행 흐림"],
   ["duration-slow", "200ms", "서랍, 들어오는 패널(에이전트 패널, 다시 펼친 메뉴)"],
+  ["duration-spin", "800ms", "스피너 한 바퀴"],
   ["ease-out", "cubic-bezier(0.2, 0, 0, 1)", "나타날 때, 상태 색"],
   ["ease-in", "cubic-bezier(0.4, 0, 1, 1)", "사라질 때"],
 ];

@@ -222,13 +222,18 @@ const scales = `
   /* 화면 골격: 사이드 메뉴, 에이전트 도킹 패널, 상세 폼의 최대 폭. 구간(1440, 1024, 900, 640, 높이 560)은 컨테이너 쿼리에 숫자로 씁니다 */
   --nav-width: 232px; --dock-width: 360px; --form-max-width: 960px;
 
+  /* 컴포넌트 치수: 컴포넌트 CSS에 px를 쓰지 않도록 여기에 둡니다 */
+  --tooltip-max-width: 320px;
+
   /* 모션: 화면이 바뀐 것을 알릴 때만. 상태 색 80ms, 떠 있는 것의 페이드 150ms, 서랍과 들어오는 패널 200ms */
   --duration-fast: 80ms; --duration-normal: 150ms; --duration-slow: 200ms;
+  --duration-spin: 800ms; /* 스피너 한 바퀴 */
   --ease-out: cubic-bezier(0.2, 0, 0, 1); /* 나타날 때, 상태 색 */
   --ease-in: cubic-bezier(0.4, 0, 1, 1);  /* 사라질 때 */
 
   /* 층 순서 */
-  --z-sticky: 10; --z-dock: 20; --z-popover: 30; --z-dialog: 40; --z-toast: 50;
+  /* 툴팁은 다이얼로그와 토스트 안의 버튼에도 뜨므로 맨 위입니다 */
+  --z-sticky: 10; --z-dock: 20; --z-popover: 30; --z-dialog: 40; --z-toast: 50; --z-tooltip: 60;
 `;
 // 크기 조정에 따라 바뀌는 값: [토큰, 기준 px, 단계마다 더하는 px]
 const sized = [
@@ -246,6 +251,7 @@ const sized = [
 const sizedLines = [
   ...sized.map(([k, base, per]) => `--${k}: calc(${base}px + var(--size-step) * ${per}px);`),
   "--control-height-sm: var(--row-height); /* 작은 컨트롤: 행 높이 상자 안에서만 */",
+  "--button-min-width: calc(var(--control-height) * 2); /* 주요·보조 글자 버튼의 최소 폭 */",
 ];
 
 // ---------- CSS ----------

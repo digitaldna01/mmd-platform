@@ -26,6 +26,7 @@
 - FE 코드 생성·타입 체크: `cd frontend && npm run check:api`
 - FE 테스트: `cd frontend && npm test`
 - FE 빌드: `cd frontend && npm run build`
+- FE CSS 검사: `cd frontend && npm run lint:css` (빌드에 포함)
 - Storybook: `cd frontend && npm run storybook`
 - 전체 실행: `cd deploy/compose && docker compose up -d --build --wait`
 - 무중단 검증: `deploy/compose/check-failover.sh`

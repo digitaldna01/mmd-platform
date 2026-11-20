@@ -1,0 +1,141 @@
+/* 버튼 스토리의 맥락 그림(조회 조건, 그리드 툴바, 확인 창, 폼 아래). 버튼이 놓이는 자리를 보여 주기 위한 것입니다 */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-buttons);
+}
+
+.stack {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+}
+
+.kind {
+  width: 1%;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+
+.contexts {
+  display: grid;
+  gap: var(--gap-panel);
+}
+
+.label {
+  margin-bottom: calc(var(--space-2) * -1);
+  color: var(--text-subtle);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+}
+
+.query {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--gap-field-y) var(--gap-field-x);
+  padding: var(--pad-panel);
+  background: var(--bg-sunken);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.field {
+  display: grid;
+  flex: 1 1 0;
+  gap: var(--gap-label);
+  min-width: 0;
+  max-width: calc(var(--button-min-width) * 3.5);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  height: var(--control-height);
+  padding: 0 var(--pad-input-x);
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border-input);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+}
+
+.gridBox {
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--pad-panel);
+}
+
+.title {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+}
+
+.count {
+  margin-left: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.divider {
+  align-self: stretch;
+  width: var(--border-width);
+  margin: var(--space-1);
+  background: var(--border);
+}
+
+.dialog {
+  display: grid;
+  gap: var(--space-2);
+  max-width: calc(var(--button-min-width) * 7);
+  padding: var(--pad-float);
+  background: var(--bg-raised);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+}
+
+.dialog b {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.dialog p {
+  margin: 0 0 var(--space-2);
+  color: var(--text-muted);
+}
+
+.foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap-buttons);
+}
+
+.log {
+  min-height: var(--row-height);
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}

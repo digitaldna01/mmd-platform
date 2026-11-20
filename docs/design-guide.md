@@ -252,7 +252,7 @@ axon 방식을 씁니다. 회색 단계를 OKLCH 명도(L)로 정하고, 라이�
 
 ## 간격, 모서리, 테두리, 그림자 (결정)
 
-값은 두 층 토큰으로 둡니다. 기본 단계는 숫자만 정하고, 화면과 컴포넌트는 쓰는 곳으로 이름 붙인 쓰임 토큰만 씁니다. CSS Modules에 px 숫자를 직접 쓰지 않고, 이 규칙은 검사 도구로 막습니다(도구는 적용 단계에서 고릅니다).
+값은 두 층 토큰으로 둡니다. 기본 단계는 숫자만 정하고, 화면과 컴포넌트는 쓰는 곳으로 이름 붙인 쓰임 토큰만 씁니다. CSS Modules에 px 숫자를 직접 쓰지 않고, 이 규칙은 stylelint로 막습니다('CSS 검사').
 
 ### 간격
 
@@ -315,7 +315,7 @@ axon 방식을 씁니다. 회색 단계를 OKLCH 명도(L)로 정하고, 라이�
 
 - 다크에서는 그림자가 보이지 않아 면의 밝기로 높이를 나타냅니다. 떠 있는 면을 `#282C2F`(L 0.29)로 둔 것은 조회 조건 패널(bg-sunken)이 `#1E2124`라서입니다. 그 값을 쓰면 조회 조건 위에서 열린 드롭다운이 바탕에 묻힙니다.
 - 막은 사이드 메뉴까지 앱 전체를 덮습니다.
-- 층 순서(z-index): 기본 0, 고정 머리글 10, 도킹 패널 20, 드롭다운·툴팁 30, 다이얼로그 40, 토스트 50.
+- 층 순서(z-index): 기본 0, 고정 머리글 10, 도킹 패널 20, 드롭다운 30, 다이얼로그 40, 토스트 50, 툴팁 60. 툴팁은 다이얼로그와 토스트 안의 버튼에도 뜨므로 맨 위에 둡니다.
 
 ### 선택 표시
 
@@ -366,7 +366,7 @@ axon 방식을 씁니다. 회색 단계를 OKLCH 명도(L)로 정하고, 라이�
 - 처리 중은 비활성과 다르게 보여야 합니다. 면을 그대로 두고 아이콘 자리에 스피너를 돌립니다. 아이콘이 없으면 글자 앞에 붙입니다. 글자는 바꾸지 않습니다. `aria-busy="true"`이고, 처리 중에 다시 눌러도 요청을 보내지 않습니다. 다시 누를 수 없게 하는 것은 누른 순간부터, 스피너는 0.3초 뒤부터입니다('모션'의 기다림).
 - 커서는 버튼과 메뉴도 기본 화살표이고, 링크만 손가락입니다. 상태 면이 이미 반응을 보여 줍니다.
 - 상태 색은 `--duration-fast`(80ms) 동안 바뀝니다('모션').
-- 투명도 면은 면 위에 한 겹 얹습니다. 면이 없는 요소는 `background-color`로, 면이 있는 요소(보조 버튼)는 겹친 층(`::before`)의 `opacity`로 그려 전환이 되게 합니다. `background-image`는 전환되지 않습니다.
+- 투명도 면은 면 위에 한 겹 얹습니다. 면이 없는 요소는 `background-color`로, 면이 있는 요소(보조 버튼)는 면 위에 겹친 층(`::before`)의 `background-color`로 그려 전환이 되게 합니다. `background-image`는 전환되지 않습니다.
 
 ### 컨트롤 크기
 
@@ -393,7 +393,7 @@ Fluent UI System Icons(Microsoft, MIT)의 Regular를 씁니다. npm `@fluentui/s
 - 아이콘은 크기마다 따로 그려진 그림이라 그 크기에서 선이 픽셀에 맞습니다. 그래서 글자처럼 1px씩 키우지 않고, 글자 크기 '크게'에서 한 단계 큰 그림으로 건너뜁니다. 모니터 보정(+1px)으로는 바꾸지 않습니다. 17px처럼 그림 크기가 아닌 값으로 그리면 선이 픽셀 사이에 걸려 흐려집니다.
 - 색은 글자색(`currentColor`)을 따릅니다. 버튼 안 아이콘은 버튼 글자색, 혼자 있는 아이콘(행 동작, 입력 칸 끝의 화살표·달력)은 보조 글자색입니다.
 - 의미색은 뜻이 있을 때만 씁니다: 토스트의 성공(positive)·오류(negative), 주의 배너의 삼각형(warning). 브랜드 레드는 아이콘에 쓰지 않습니다.
-- 버튼은 글자가 먼저이고 아이콘은 앞에 붙습니다(사이 4px). 아이콘만 있는 버튼은 뜻이 분명한 것(더 보기, 닫기, 새로 고침)만 쓰고, 정사각형에 `label`(`aria-label`)과 툴팁을 답니다.
+- 버튼은 글자가 먼저이고 아이콘은 앞에 붙습니다(사이 4px). 아이콘을 붙이는 버튼은 '버튼'을 따릅니다. 아이콘만 있는 버튼은 뜻이 분명한 것(더 보기, 닫기, 새로 고침)만 쓰고, 정사각형에 `label`(`aria-label`)과 툴팁을 답니다.
 - 정렬하지 않은 머리글에는 아이콘을 두지 않고, 정렬한 열에만 화살표(`arrow-up`, `arrow-down`)를 둡니다.
 - 에이전트는 아이콘 대신 2px 고리를 씁니다.
 - 한 개념에 한 아이콘입니다. 아래 표에 없는 아이콘이 필요하면 스크립트의 목록과 이 표에 함께 더하고 `npm run icons`를 실행합니다.
@@ -507,6 +507,8 @@ Fluent UI System Icons(Microsoft, MIT)의 Regular를 씁니다. npm `@fluentui/s
 - 툴팁을 쓰는 곳: 아이콘만 있는 버튼의 이름(단축키가 있으면 함께), 비활성 버튼의 이유, 잘린 글자의 전체, 편집 상태 표시(`+ • −`)와 약어 머리글의 뜻.
 - 툴팁에는 누를 것을 넣지 않고, 툴팁에만 있는 정보를 두지 않습니다.
 - 키보드 포커스 때도 보이고, Esc로 닫히며, 툴팁 위로 마우스를 옮겨도 사라지지 않습니다(WCAG 1.4.13). 나타나는 시간은 '모션'을 따릅니다.
+- 아래에 자리가 없으면 대상 위에 뜨고, 창 밖으로 나가지 않게 안으로 옮깁니다. 대상이 스크롤되거나 창 크기가 바뀌면 닫힙니다. 손가락 터치에는 뜨지 않습니다.
+- 코드는 `frontend/src/shared/ui/Tooltip.tsx`입니다. 버튼에는 `Button`의 `label`(아이콘만 있는 버튼)과 `disabledReason`(비활성 이유)을 쓰고, 그 밖의 대상(잘린 글자, 편집 상태 표시)은 `<Tooltip content="신규">`로 감쌉니다. 대상은 키보드로 포커스를 받을 수 있어야 합니다.
 
 ### 문구
 
@@ -556,6 +558,7 @@ Fluent UI System Icons(Microsoft, MIT)의 Regular를 씁니다. npm `@fluentui/s
 | `--duration-fast` | 80ms | 상태 색: 마우스 올림, 누름, 체크, 그리드 행 |
 | `--duration-normal` | 150ms | 떠 있는 것이 나타나고 사라짐: 드롭다운, 메뉴, 툴팁, 토스트, 확인 창, 막. 조회 중 행 흐림 |
 | `--duration-slow` | 200ms | 서랍, 들어오는 패널(에이전트 패널, 다시 펼친 메뉴) |
+| `--duration-spin` | 800ms | 스피너 한 바퀴 |
 | `--ease-out` | `cubic-bezier(0.2, 0, 0, 1)` | 나타날 때, 상태 색 |
 | `--ease-in` | `cubic-bezier(0.4, 0, 1, 1)` | 사라질 때 |
 
@@ -577,6 +580,7 @@ Fluent UI System Icons(Microsoft, MIT)의 Regular를 씁니다. npm `@fluentui/s
 - 0.3초가 넘을 때만 로딩 표시를 합니다. 한번 보이면 0.5초는 둡니다. 빨리 끝나는 조회에서 표시가 깜빡이지 않게 하기 위해서입니다.
 - 조회 중에는 기존 행을 흐리게 남기고(위치를 잃지 않게) 그리드 가운데에 스피너와 `조회 중`을 둡니다.
 - 처리 중인 버튼은 누른 순간부터 다시 누를 수 없고, 스피너는 0.3초 뒤에 보입니다. 스피너는 한 바퀴 0.8초입니다.
+- 0.3초와 0.5초 규칙은 `shared/ui/useDelayedBusy`가, 스피너는 `shared/ui/Spinner`가 그립니다. 버튼은 `busy`만 주면 됩니다.
 
 툴팁
 
@@ -599,6 +603,7 @@ Fluent UI System Icons(Microsoft, MIT)의 Regular를 씁니다. npm `@fluentui/s
 - 스크립트는 대비를 검사하고, 기준에 못 미치면 실패합니다. 모든 글자는 네 바탕 위에서 4.5:1 이상, 본문과 보조 글자는 창 바탕과 패널 위에서 12:1과 7:1 이상, 의미색은 패널과 자기 옅은 면 위에서 4.5:1 이상, 입력창 테두리와 활성 메뉴 표시선은 3:1 이상입니다. 비활성 글자는 2.5:1 이상이면서 안내 글자보다 흐려야 하고, 주요 버튼 글자는 마우스 올림과 누름에서도 4.5:1 이상, 상태 면은 마우스 올림 < 누름 < 선택 순서로 한 단계씩 진해져야 합니다.
 - 테마는 OS 설정을 따르고, 사용자가 고르면 `<html data-theme="light">` 또는 `"dark"`로 고정합니다. 글자 크기 '크게'는 `data-text-size="large"`, 넓은 모니터는 `data-screen="wide"`입니다. 넓은 모니터는 `shared/styles/display.ts`의 `watchScreenSize()`가 붙입니다.
 - Storybook의 '기초' 페이지에서 색, 상태 표시, 글꼴과 크기, 간격, 모서리와 테두리, 그림자와 층, 선택과 포커스, 상호작용 상태, 아이콘, 표기와 문구, 화면 골격, 모션을 봅니다. 도구 막대에서 테마, 글자 크기, 모니터를 바꿉니다. 이 페이지의 그림은 규칙을 보여 주는 것이라 화면에서 가져다 쓰지 않습니다.
+- '컴포넌트' 페이지에서 화면에 가져다 쓰는 컴포넌트(버튼)의 종류, 상태, 놓는 자리를 봅니다. '직접 바꿔 보기'에서 속성을 바꿔 볼 수 있습니다.
 
 토큰 이름
 
@@ -612,13 +617,31 @@ Fluent UI System Icons(Microsoft, MIT)의 Regular를 씁니다. npm `@fluentui/s
 | 의미색        | `--positive`, `--negative`, `--warning`, `--agent`와 각각의 `-soft`. `--bg-warning`은 `--warning-soft`의 서버 목업 이름       |
 | 그림자        | `--shadow-float`(1 떠 있음), `--shadow-dialog`(2 화면을 막음), `--scrim`(막)                                                 |
 | 글꼴          | `--font-sans`, `--font-mono`, `--font-brand`, `--code-features`(빗금 0), `--weight-regular`·`-medium`·`-semibold`·`-bold`, `--leading-xs`~`--leading-2xl` |
-| 크기 (조정됨) | `--text-xs`~`--text-2xl`, `--row-height`, `--control-height`, `--control-height-sm`, `--badge-height`, `--check-size`        |
+| 크기 (조정됨) | `--text-xs`~`--text-2xl`, `--row-height`, `--control-height`, `--control-height-sm`, `--badge-height`, `--check-size`, `--button-min-width`(주요·보조 글자 버튼의 최소 폭, 컨트롤 높이의 2배) |
 | 아이콘        | `--icon-size-sm`(12px), `--icon-size-md`(16px), `--icon-size-lg`(24px). 글자 크기 '크게'에서 16, 20, 28px                  |
 | 간격          | `--space-1`~`--space-6`과 위 '간격' 표의 쓰임 토큰, `--pad-button-x-sm`(작은 버튼 안 좌우)                                   |
 | 모서리, 선    | `--radius-sm`, `--radius-md`, `--radius-lg`, `--border-width`(1px), `--border-width-state`(2px), `--focus-width`, `--focus-offset`, `--focus-offset-inset` |
-| 층            | `--z-sticky`, `--z-dock`, `--z-popover`, `--z-dialog`, `--z-toast`                                                           |
+| 층            | `--z-sticky`, `--z-dock`, `--z-popover`, `--z-dialog`, `--z-toast`, `--z-tooltip`                                            |
 | 화면 골격     | `--nav-width`(232px), `--dock-width`(360px), `--form-max-width`(960px)                                                      |
-| 모션          | `--duration-fast`(80ms), `--duration-normal`(150ms), `--duration-slow`(200ms), `--ease-out`, `--ease-in`                    |
+| 컴포넌트 치수 | `--tooltip-max-width`(320px). 컴포넌트에 고정 치수가 필요하면 여기에 더합니다                                                |
+| 모션          | `--duration-fast`(80ms), `--duration-normal`(150ms), `--duration-slow`(200ms), `--duration-spin`(800ms), `--ease-out`, `--ease-in` |
+
+### CSS 검사 (적용)
+
+`npm run lint:css`(stylelint)가 `src`의 CSS를 검사하고, `npm run build`가 먼저 실행합니다. 규칙은 `frontend/stylelint.config.mjs`에 있습니다.
+
+| 막는 것 | 대신 쓰는 것 |
+| --- | --- |
+| 색 값: `#fff`, `red`, `rgb()`, `oklch()`, `color-mix()` | 색 토큰 (`--text`, `--bg-hover` 등) |
+| 길이 단위: `px`, `rem`, `em`, `ch` 등 | 간격·크기 토큰. `0`, `%`, `fr`, `vw`, `vh`는 씁니다 |
+| `transition`, `animation`의 시간 값 (`150ms`) | 모션 토큰 (`--duration-normal`) |
+| `font` 줄임 속성 | `font-family`, `font-size`, `font-weight`, `line-height`를 따로 씁니다 |
+| 토큰이 아닌 `font-size`, `font-weight`, `font-family`, `line-height`, `border-radius`, `z-index` | `--text-*`, `--weight-*`, `--font-*`, `--leading-*`(또는 `1`), `--radius-*`(또는 `0`, `50%`), `--z-*` |
+| `!important` | 선택자를 바로 씁니다 |
+
+- 화면 배치 구간(1440, 1024, 900, 640, 높이 560)은 CSS 변수를 쓸 수 없어 `@media`의 폭·높이와 `@container`에는 숫자를 씁니다.
+- 검사하지 않는 파일: `tokens.css`(토큰을 정의함), `fonts.css`(글꼴 선언), '기초' 스토리의 그림(`shared/styles/foundations/`).
+- 검사를 끄는 주석(`stylelint-disable`)을 쓰지 않습니다. 필요한 값이 토큰에 없으면 이 문서와 `build-tokens.mjs`에 토큰을 더합니다. 상용 그리드 테마처럼 바깥 값을 옮겨야 하는 파일은 그때 `ignoreFiles`에 이유와 함께 더합니다.
 
 ## 컴포넌트 (결정)
 
@@ -683,9 +706,37 @@ Fluent UI System Icons(Microsoft, MIT)의 Regular를 씁니다. npm `@fluentui/s
 | 고스트 | 면과 테두리 없음, 보조 글자              | 그리드 툴바의 행 추가·행 삭제·엑셀, 토스트 동작, 에이전트 |
 
 - 높이는 컨트롤, 안 좌우 12px, 모서리 4px, Medium입니다. 아이콘과 글자 사이는 4px입니다.
+- 주요·보조 글자 버튼은 최소 폭이 `--button-min-width`(컨트롤 높이의 2배, 64px)입니다. 두 글자 버튼(취소, 저장, 삭제)의 폭이 같아져 확인 창과 폼 아래가 가지런합니다. 고스트와 아이콘만 있는 버튼에는 두지 않습니다.
+- 아이콘은 화면에 늘 놓여 있어 눈으로 찾는 버튼에만 붙입니다: 조회 조건의 조회·초기화, 그리드 툴바의 도구(행 추가, 행 삭제, 엑셀), 이중 목록의 추가(뒤에 오른쪽 화살표). 저장, 확인, 취소, 삭제처럼 마무리하는 버튼은 확인 창과 폼 아래, 그리드 툴바 어디서든 글자만 씁니다. 무엇을 하는지는 확인 창의 질문과 버튼 글자가 이미 말하고, 휴지통 같은 아이콘은 겁을 주는 표시를 더하기 때문입니다.
 - 대상 개수가 있으면 동사 뒤에 붙입니다: `저장 4건`, `추가 3`. 0이면 버튼을 비활성으로 둡니다.
 - 삭제 버튼에도 빨강을 쓰지 않습니다. 빨강은 오류와 반려에만 씁니다. 삭제는 저장 전까지 행 편집 상태 `−`로 되돌릴 수 있게 합니다.
 - 마우스 올림, 누름, 비활성, 처리 중은 '상호작용 상태'를, 작은 버튼은 '컨트롤 크기'를 따릅니다.
+
+코드: `frontend/src/shared/ui/Button.tsx`. 화면은 `<button>`을 직접 쓰지 않습니다.
+
+```tsx
+<Button variant="primary" icon="search" onClick={search}>조회</Button>
+<Button icon="reset" onClick={reset}>초기화</Button>                          // variant 기본값은 secondary
+<Button variant="ghost" icon="add" onClick={addRows}>행 추가</Button>
+<Button variant="ghost" icon="refresh" label="새로 고침" onClick={refresh} />  // 아이콘만: label이 이름과 툴팁
+<Button
+  variant="primary"
+  count={changes}
+  countUnit="건"
+  busy={save.isPending}
+  disabledReason={changes === 0 ? "저장할 변경이 없습니다" : undefined}
+  onClick={submit}
+>
+  저장
+</Button>
+```
+
+- 비활성은 `disabledReason`으로만 만듭니다. 이유가 툴팁과 보조 기술의 설명으로 함께 갑니다. `disabled` 속성은 받지 않습니다.
+- 처리 중은 `busy`입니다. 누른 순간부터 `onClick`을 부르지 않고, 스피너는 0.3초 뒤에 아이콘 자리(아이콘이 없으면 글자 앞)에 돕니다.
+- 이중 목록의 `추가 3 →`처럼 방향을 뜻하는 아이콘만 `iconPosition="end"`로 글자 뒤에 붙입니다.
+- 개수는 `count`와 `countUnit`으로 넘깁니다. `formatNumber`로 표기되고, 0인데 비활성이 아니면 개발 중에 경고합니다.
+- 기본 `type`은 `button`이라 폼을 실수로 보내지 않습니다. 폼을 보낼 버튼만 `type="submit"`을 줍니다.
+- 모양을 바꾸는 `className`, `style`은 받지 않습니다. 자리는 감싸는 요소의 `display: flex`와 `gap: var(--gap-buttons)`로 잡습니다.
 
 ### 체크박스와 라디오
 

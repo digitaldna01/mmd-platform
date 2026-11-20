@@ -18,11 +18,12 @@ npm ci
 | `npm run dev` | 개발 서버 (`http://localhost:5173`) |
 | `npm run storybook` | Storybook (`http://localhost:6006`) |
 | `npm test` | 테스트 |
-| `npm run build` | 토큰·아이콘 검사, 타입 체크, 운영 빌드 |
+| `npm run build` | 토큰·아이콘·CSS 검사, 타입 체크, 운영 빌드 |
 | `npm run build-storybook` | Storybook 빌드 |
 | `npm run check:api` | API 코드 재생성과 타입 체크 |
 | `npm run tokens` | 디자인 토큰(`tokens.css`)과 대비 검사 결과 생성 |
 | `npm run icons` | 아이콘(`icons.generated.ts`) 생성 |
+| `npm run lint:css` | CSS 검사 (색과 크기는 토큰만) |
 
 개발 서버는 `/api` 요청을 `http://localhost:8080`으로 넘깁니다. BE는 루트에서 `./gradlew :backend:bootRun`으로 실행합니다.
 
@@ -49,7 +50,10 @@ npm ci
 - `Screen`은 지연 로딩을 위해 default export로 내보냅니다.
 - API는 `src/api/generated/`의 훅과 함수만 씁니다. 이 폴더는 직접 고치지 않습니다.
 - 에러는 `shared/feedback/ErrorNotice`로 표시합니다. 사용자 메시지와 추적 ID가 함께 나옵니다.
-- 스타일은 CSS Modules로 쓰고, 색, 크기, 간격은 `shared/styles/tokens.css`의 CSS 변수를 씁니다. 규칙과 토큰 이름은 `docs/design-guide.md`에 있고, Storybook의 '기초' 페이지에서 볼 수 있습니다.
+- 스타일은 CSS Modules로 쓰고, 색, 크기, 간격, 글꼴, 모서리, 층, 모션 시간은 `shared/styles/tokens.css`의 CSS 변수만 씁니다. 규칙과 토큰 이름은 `docs/design-guide.md`에 있고, Storybook의 '기초' 페이지에서 볼 수 있습니다.
+- CSS에 `#fff`, `12px`, `150ms` 같은 값을 직접 쓰면 `npm run lint:css`(빌드에 포함)가 막습니다. 필요한 값이 토큰에 없으면 검사를 끄지 말고 토큰을 더합니다(디자인 가이드 'CSS 검사').
 - `tokens.css`는 `scripts/build-tokens.mjs`가 만듭니다. 손으로 고치지 않고, 값을 바꿀 때는 디자인 가이드와 스크립트를 함께 고친 뒤 `npm run tokens`를 실행합니다.
+- 버튼은 `shared/ui/Button`으로만 씁니다. `<button>`을 직접 쓰지 않습니다. 비활성은 `disabledReason`, 처리 중은 `busy`, 아이콘만 있는 버튼은 `icon`과 `label`로 만듭니다. Storybook '컴포넌트/버튼'에 쓰는 법과 놓는 자리가 있습니다.
+- 툴팁은 `shared/ui/Tooltip`으로, 기다림 표시는 `shared/ui/useDelayedBusy`와 `Spinner`로 씁니다.
 - 아이콘은 `shared/icons/Icon`으로만 씁니다(`<Icon name="search" />`). 새 아이콘은 `scripts/build-icons.mjs`의 목록과 디자인 가이드의 표에 함께 더하고 `npm run icons`를 실행합니다. SVG를 직접 붙여 넣지 않습니다.
 - 날짜, 시각, 숫자, 빈 값은 `shared/format`의 함수로만 화면에 씁니다(`formatDateTime`, `formatNumber` 등). 문구와 용어는 디자인 가이드의 '표기와 문구'를 따릅니다.

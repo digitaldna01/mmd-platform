@@ -1,0 +1,23 @@
+/* 스피너. 규칙: docs/design-guide.md '모션'의 기다림.
+   '동작 줄이기'를 켜도 계속 돕니다. 기다림을 알리는 표시이기 때문입니다 */
+.spinner {
+  display: block;
+  flex: none;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  animation: spin var(--duration-spin) linear infinite;
+}
+
+.spinner circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 40 100;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
