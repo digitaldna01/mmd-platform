@@ -33,6 +33,6 @@ describe("ScreenHost", () => {
 
     const alert = await screen.findByRole("alert");
     expect(alert.textContent).toContain("요청한 항목을 찾을 수 없습니다.");
-    expect(alert.textContent).toContain("추적 ID: trace-5678");
+    expect(alert.textContent).toContain("추적 ID trace-5678");
   });
 });

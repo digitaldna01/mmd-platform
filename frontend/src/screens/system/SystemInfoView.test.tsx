@@ -29,12 +29,14 @@ describe("SystemInfoView", () => {
     expect(screen.getByText("버전 정보가 없습니다.")).toBeTruthy();
   });
 
-  it("에러와 추적 ID를 표시하고 다시 시도할 수 있다", () => {
+  it("조회 실패를 그 자리에 추적 ID와 함께 보이고 다시 조회할 수 있다", () => {
     const onRetry = vi.fn();
     render(<SystemInfoView isLoading={false} error={error} onRetry={onRetry} />);
 
-    expect(screen.getByRole("alert").textContent).toContain("추적 ID: trace-1234");
-    fireEvent.click(screen.getByRole("button", { name: "다시 시도" }));
+    const alert = screen.getByRole("alert").textContent;
+    expect(alert).toContain("조회하지 못했습니다.");
+    expect(alert).toContain("추적 ID trace-1234");
+    fireEvent.click(screen.getByRole("button", { name: "다시 조회" }));
     expect(onRetry).toHaveBeenCalledOnce();
   });
 });

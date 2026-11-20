@@ -1,0 +1,67 @@
+/* 확인 창. 규칙: docs/design-guide.md '다이얼로그', '확인 창을 띄우는 때'.
+   떠 있음 2단계, 막이 앱 전체를 덮습니다 */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-dialog);
+  display: grid;
+  place-items: center;
+  padding: var(--page-gutter);
+  background: var(--scrim);
+}
+
+.overlay[data-entering] {
+  animation: fade-in var(--duration-normal) var(--ease-out);
+}
+
+.overlay[data-exiting] {
+  animation: fade-out var(--duration-normal) var(--ease-in);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.modal {
+  width: min(var(--dialog-max-width), 100%);
+  outline: none;
+}
+
+.dialog {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--pad-float);
+  background: var(--bg-raised);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-dialog);
+  outline: none;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-lg);
+}
+
+.description {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+/* 보조(취소) → 주요 순서. 주요 버튼이 오른쪽 끝에 옵니다 */
+.foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap-buttons);
+  margin-top: var(--space-2);
+}

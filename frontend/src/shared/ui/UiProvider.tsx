@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { I18nProvider } from "react-aria-components";
+import { ToastProvider } from "./Toast";
 
 /**
  * 화면 언어. React Aria의 안내 문구(스크린 리더용)가 이 언어를 따릅니다.
@@ -7,7 +8,11 @@ import { I18nProvider } from "react-aria-components";
  */
 export const APP_LOCALE = "ko-KR";
 
-/** 앱과 Storybook의 맨 바깥에 한 번 둡니다 */
+/** 앱과 Storybook의 맨 바깥에 한 번 둡니다. 화면 언어와 토스트 자리를 줍니다 */
 export function UiProvider({ children }: { children: ReactNode }) {
-  return <I18nProvider locale={APP_LOCALE}>{children}</I18nProvider>;
+  return (
+    <I18nProvider locale={APP_LOCALE}>
+      <ToastProvider>{children}</ToastProvider>
+    </I18nProvider>
+  );
 }

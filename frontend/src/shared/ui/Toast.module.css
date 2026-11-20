@@ -1,0 +1,85 @@
+/* 토스트. 규칙: docs/design-guide.md '토스트'.
+   화면 오른쪽 아래, 떠 있음 1단계. 면은 늘 떠 있는 면이고 아이콘 색만 의미색을 씁니다 */
+.region {
+  position: fixed;
+  right: var(--page-gutter);
+  bottom: var(--page-gutter);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.toast {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-3);
+  width: min(var(--toast-width), calc(100vw - var(--page-gutter) * 2));
+  padding: var(--space-3) var(--space-2) var(--space-3) var(--space-4);
+  background: var(--bg-raised);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+  pointer-events: auto;
+  animation: toast-in var(--duration-normal) var(--ease-out);
+}
+
+.closing {
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-in);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* 아이콘을 제목 첫 줄 가운데에 맞춥니다 */
+.icon {
+  margin-top: calc((var(--text-sm) * var(--leading-sm) - var(--icon-size-md)) / 2);
+}
+
+.success .icon {
+  color: var(--positive);
+}
+
+.info .icon {
+  color: var(--text-subtle);
+}
+
+.error .icon {
+  color: var(--negative);
+}
+
+.title {
+  margin: 0;
+  font-weight: var(--weight-semibold);
+}
+
+.description {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-xs);
+}
+
+.detail {
+  display: block;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  user-select: all;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}

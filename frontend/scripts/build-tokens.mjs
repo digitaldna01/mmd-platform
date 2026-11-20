@@ -226,6 +226,7 @@ const scales = `
   --tooltip-max-width: 320px; --list-max-width: 360px;
   --query-field-min-width: 150px; --query-field-max-width: 220px; /* 조회 조건 칸 폭: 내용에 맞춰 이 사이 */
   --form-column-min-width: 180px; /* 상세 폼의 열 */
+  --toast-width: 360px; --dialog-max-width: 560px;
 
   /* 모션: 화면이 바뀐 것을 알릴 때만. 상태 색 80ms, 떠 있는 것의 페이드 150ms, 서랍과 들어오는 패널 200ms */
   --duration-fast: 80ms; --duration-normal: 150ms; --duration-slow: 200ms;

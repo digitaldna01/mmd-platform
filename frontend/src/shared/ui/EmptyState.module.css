@@ -1,0 +1,54 @@
+/* 빈 상태. 그리드 자리에 둡니다. 규칙: docs/design-guide.md '빈 상태' */
+.empty {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: var(--space-1);
+  padding: var(--pad-empty);
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+/* 그리드 상자 안에 들어갈 때: 상자 테두리는 그리드가 그립니다 */
+.bare {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.icon {
+  margin-bottom: var(--space-1);
+  color: var(--text-subtle);
+}
+
+.error .icon {
+  color: var(--negative);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-md);
+}
+
+.description {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+/* 추적 ID: 한 번 누르면 전체가 골라져 복사하기 쉽습니다 */
+.detail {
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  user-select: all;
+}
+
+.actions {
+  display: flex;
+  gap: var(--gap-buttons);
+  margin-top: var(--space-2);
+}

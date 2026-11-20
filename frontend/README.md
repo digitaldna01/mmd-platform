@@ -49,7 +49,9 @@ npm ci
 - `Screen`은 데이터를 연결하고 `View`는 받은 값을 표시합니다. `View`에서 API를 호출하지 않습니다.
 - `Screen`은 지연 로딩을 위해 default export로 내보냅니다.
 - API는 `src/api/generated/`의 훅과 함수만 씁니다. 이 폴더는 직접 고치지 않습니다.
-- 에러는 `shared/feedback/ErrorNotice`로 표시합니다. 사용자 메시지와 추적 ID가 함께 나옵니다.
+- 오류는 일이 일어난 자리에 보입니다(디자인 가이드 '오류를 보이는 자리'). 조회 실패는 그리드 자리에 `shared/feedback/ErrorNotice`(사용자 메시지, 추적 ID, 다시 조회)로, 저장 실패는 걸린 칸의 오류 셀과 `useToast().error`로 보입니다. 오류를 확인 창으로 보이지 않습니다.
+- 성공과 결과 안내는 `useToast()`, 늘 보이는 안내는 `Banner`, 그리드 자리의 조회 전·결과 없음·권한 없음은 `EmptyState`로 보입니다.
+- 확인 창(`useConfirm`)은 삭제가 든 저장과 저장하지 않은 변경을 버릴 때만 띄웁니다. 평소 저장에는 띄우지 않습니다.
 - 스타일은 CSS Modules로 쓰고, 색, 크기, 간격, 글꼴, 모서리, 층, 모션 시간은 `shared/styles/tokens.css`의 CSS 변수만 씁니다. 규칙과 토큰 이름은 `docs/design-guide.md`에 있고, Storybook의 '기초' 페이지에서 볼 수 있습니다.
 - CSS에 `#fff`, `12px`, `150ms` 같은 값을 직접 쓰면 `npm run lint:css`(빌드에 포함)가 막습니다. 필요한 값이 토큰에 없으면 검사를 끄지 말고 토큰을 더합니다(디자인 가이드 'CSS 검사').
 - `tokens.css`는 `scripts/build-tokens.mjs`가 만듭니다. 손으로 고치지 않고, 값을 바꿀 때는 디자인 가이드와 스크립트를 함께 고친 뒤 `npm run tokens`를 실행합니다.
