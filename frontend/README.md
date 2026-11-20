@@ -32,17 +32,20 @@ npm ci
 `src/screens/system/`이 복사해서 시작하는 샘플입니다. LOT 이력 화면을 예로 듭니다.
 
 1. `src/screens/system/`을 `src/screens/lot/`으로 복사하고 파일 이름을 `LotHistory...`로 바꿉니다.
-2. `src/screens/registry.ts`에 화면 ID를 추가합니다.
+2. `src/screens/registry.ts`에 화면 ID를, `src/app/menu.ts`에 메뉴 항목을 추가합니다. 메뉴 이름은 화면 머리의 제목과 같게 씁니다.
 
    ```ts
+   // registry.ts
    "lot.history": lazy(() => import("./lot/LotHistoryScreen")),
+   // menu.ts의 알맞은 묶음
+   { screenId: "lot.history", name: "LOT 이력", legacyId: "LTC04001" },
    ```
 
 3. `LotHistoryView`와 스토리를 먼저 만듭니다. Storybook에서 BE 없이 정상, 로딩, 빈 결과, 에러 상태를 확인합니다.
 4. `LotHistoryScreen`에서 생성된 API 훅을 `LotHistoryView`에 연결합니다.
 5. `LotHistoryView` 테스트를 작성합니다.
 
-아직 화면 배치가 없으므로, 앱에서 확인할 때는 `src/app/App.tsx`의 `screenId`를 새 화면 ID로 잠시 바꿉니다.
+`View`는 `ScreenLayout` 안에 `ScreenHeader`, (`Tabs`), `QueryBar`, `WorkArea` 순서로 놓습니다(Storybook '컴포넌트/화면 틀'). 앱에서는 사이드 메뉴로 엽니다.
 
 ## 규칙
 
@@ -52,6 +55,8 @@ npm ci
 - 오류는 일이 일어난 자리에 보입니다(디자인 가이드 '오류를 보이는 자리'). 조회 실패는 그리드 자리에 `shared/feedback/ErrorNotice`(사용자 메시지, 추적 ID, 다시 조회)로, 저장 실패는 걸린 칸의 오류 셀과 `useToast().error`로 보입니다. 오류를 확인 창으로 보이지 않습니다.
 - 성공과 결과 안내는 `useToast()`, 늘 보이는 안내는 `Banner`, 그리드 자리의 조회 전·결과 없음·권한 없음은 `EmptyState`로 보입니다.
 - 확인 창(`useConfirm`)은 삭제가 든 저장과 저장하지 않은 변경을 버릴 때만 띄웁니다. 평소 저장에는 띄우지 않습니다.
+- 고칠 수 있는 화면은 `useLeaveGuard(저장하지 않은 변경 수)`를 부릅니다. 다른 화면으로 옮기거나 창을 닫을 때 확인합니다.
+- 조회 조건은 `QueryBar`, 상세 폼은 `DetailForm`으로 만듭니다. 조회 조건은 접지 않고, 꼭 필요한 조건만 둡니다.
 - 스타일은 CSS Modules로 쓰고, 색, 크기, 간격, 글꼴, 모서리, 층, 모션 시간은 `shared/styles/tokens.css`의 CSS 변수만 씁니다. 규칙과 토큰 이름은 `docs/design-guide.md`에 있고, Storybook의 '기초' 페이지에서 볼 수 있습니다.
 - CSS에 `#fff`, `12px`, `150ms` 같은 값을 직접 쓰면 `npm run lint:css`(빌드에 포함)가 막습니다. 필요한 값이 토큰에 없으면 검사를 끄지 말고 토큰을 더합니다(디자인 가이드 'CSS 검사').
 - `tokens.css`는 `scripts/build-tokens.mjs`가 만듭니다. 손으로 고치지 않고, 값을 바꿀 때는 디자인 가이드와 스크립트를 함께 고친 뒤 `npm run tokens`를 실행합니다.

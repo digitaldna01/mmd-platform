@@ -67,16 +67,21 @@ const contrast = (a, b) => {
 };
 
 // ---------- 색 정의 (design-guide.md '색') ----------
-// 뉴트럴: 라이트는 LG Warm Grey와 같은 색상(85°)에 채도 0.003, 다크는 쿨(250°)에 채도 0.008.
+// 뉴트럴: 라이트와 다크 모두 쿨(250°). 채도는 라이트 0.003, 다크 0.008입니다.
 // 라이트 패널과 다크 본문은 채도를 반으로 줄여 거의 무채색으로 둡니다(axon과 같음).
-const N = { light: { h: 85, C: 0.003 }, dark: { h: 250, C: 0.008 } };
+// 라이트를 웜(85°)에서 바꾼 이유는 design-guide.md '뉴트럴'에 있습니다.
+const N = { light: { h: 250, C: 0.003 }, dark: { h: 250, C: 0.008 } };
+// 라이트의 선, 마우스 올림, 선택, 그림자의 기준색. 면과 같은 색상·채도 규칙으로 계산합니다
+const lightTint = oklch(0.183, N.light.C, N.light.h);
 
 const themes = {
   light: {
     color: {
-      "bg-app": oklch(0.95, N.light.C, N.light.h),
-      "bg-surface": oklch(0.985, 0.0015, N.light.h),
+      // 면 나눔: 메뉴 0.95 < 본문 바탕 0.975 < 패널 0.994. 그리드 머리글 등은 본문 바탕보다 어두운 0.955
+      "bg-app": oklch(0.975, N.light.C, N.light.h),
+      "bg-surface": oklch(0.994, 0.0015, N.light.h),
       "bg-sunken": oklch(0.955, N.light.C, N.light.h),
+      "bg-nav": oklch(0.95, N.light.C, N.light.h),
       // 비활성 글자: 안내 글자보다 한 단계 흐리게(약 3:1). WCAG는 비활성 요소를 대비 기준에서 뺍니다
       "text-disabled": oklch(0.64, N.light.C, N.light.h),
       "text-subtle": oklch(0.52, N.light.C, N.light.h),
@@ -96,7 +101,7 @@ const themes = {
     raised: "bg-surface",
     // 활성 메뉴 표시선과 로고 띠
     brandBar: "brand-heritage",
-    tintBase: fixed("#14120E", "rgb(20 18 14)"),
+    tintBase: lightTint,
     // 마우스 올림 → 누름 → 선택이 한 단계씩 진해집니다. 비활성 면은 누름과 같은 투명도입니다
     tint: {
       border: 0.13,
@@ -109,18 +114,21 @@ const themes = {
     },
     softAlpha: 0.12,
     shadow: {
-      "shadow-float": "0 4px 16px rgb(20 18 14 / 0.10)",
-      "shadow-dialog": "0 12px 32px rgb(20 18 14 / 0.16)",
-      scrim: "rgb(20 18 14 / 0.32)",
+      "shadow-float": `0 4px 16px ${alpha(lightTint, 0.1).css}`,
+      "shadow-dialog": `0 12px 32px ${alpha(lightTint, 0.16).css}`,
+      scrim: alpha(lightTint, 0.32).css,
     },
   },
   dark: {
     color: {
+      // 면 나눔: 메뉴 0.14 < 본문 바탕 0.165 < 패널 0.205. 메뉴만 라이트처럼 한 단계(ΔL 0.025) 어둡게 두고,
+      // 본문 바탕과 패널은 ΔL 0.04를 지킵니다. 다크의 bg-sunken은 패널보다 밝은 단계입니다
       "bg-app": oklch(0.165, N.dark.C, N.dark.h),
       "bg-surface": oklch(0.205, N.dark.C, N.dark.h),
       "bg-sunken": oklch(0.245, N.dark.C, N.dark.h),
+      "bg-nav": oklch(0.14, N.dark.C, N.dark.h),
       "bg-raised": oklch(0.29, N.dark.C, N.dark.h),
-      // 0.615에서 올렸습니다. 0.615는 떠 있는 면 위에서 3.8:1, 조회 조건 위에서 4.4:1로 WCAG 4.5:1에 못 미쳤습니다
+      // 0.615에서 올렸습니다. 0.615는 떠 있는 면 위에서 3.8:1, bg-sunken 위에서 4.4:1로 WCAG 4.5:1에 못 미쳤습니다
       "text-subtle": oklch(0.66, N.dark.C, N.dark.h),
       "text-disabled": oklch(0.52, N.dark.C, N.dark.h),
       "text-muted": oklch(0.75, N.dark.C, N.dark.h),
@@ -135,7 +143,8 @@ const themes = {
       "brand-heritage": fixed("#A50034", "LG Heritage Red"),
       "brand-active": fixed("#FD312E", "LG Active Red"),
     },
-    // 떠 있는 면: 다크는 그림자가 보이지 않아 한 단계 밝은 면. bg-sunken(L 0.245)보다 밝아야 조회 조건 위의 드롭다운이 묻히지 않습니다
+    // 떠 있는 면: 다크는 그림자가 보이지 않아 한 단계 밝은 면. 가장 밝은 바탕인 bg-sunken(L 0.245)보다 밝아야
+    // 그리드 머리글이나 읽기 전용 칸 위에서 열린 드롭다운이 묻히지 않습니다
     raised: "bg-raised",
     // Heritage Red는 다크 패널 위에서 2.3:1이라 Active Red를 씁니다
     brandBar: "brand-active",
@@ -164,7 +173,6 @@ function themeLines(t) {
   for (const [k, c] of Object.entries(t.color)) lines.push(`--${k}: ${c.hex}; /* ${c.note} */`);
   if (t.raised !== "bg-raised") lines.push(`--bg-raised: var(--${t.raised});`);
   lines.push(
-    "--bg-nav: var(--bg-app);",
     "--primary: var(--text); /* 주요 버튼 면 */",
     "--on-primary: var(--bg-surface); /* 주요 버튼 글자 */",
     `--brand-bar: var(--${t.brandBar}); /* 로고 띠, 활성 메뉴 표시선 */`,
@@ -312,6 +320,7 @@ for (const [name, t] of Object.entries(themes)) {
   const c = t.color;
   const raised = c[t.raised];
   const bgs = {
+    "bg-nav": c["bg-nav"],
     "bg-app": c["bg-app"],
     "bg-surface": c["bg-surface"],
     "bg-sunken": c["bg-sunken"],
@@ -324,20 +333,20 @@ for (const [name, t] of Object.entries(themes)) {
   for (const [k, v] of Object.entries(c)) md += `| \`${k}\` | \`${v.hex}\` | ${v.note} |\n`;
 
   md +=
-    "\n### 글자\n\n모든 글자는 네 바탕 위에서 4.5 이상입니다(WCAG 1.4.3). 본문과 보조 글자는 오래 읽는 창 바탕과 패널 위에서 더 높게 둡니다(본문 ≥ 12, 보조 ≥ 7).\n\n| 글자 \\ 바탕 | bg-app | bg-surface | bg-sunken | bg-raised |\n| --- | --- | --- | --- | --- |\n";
+    "\n### 글자\n\n모든 글자는 다섯 바탕 위에서 4.5 이상입니다(WCAG 1.4.3). 본문과 보조 글자는 오래 읽는 메뉴, 본문 바탕, 패널 위에서 더 높게 둡니다(본문 ≥ 12, 보조 ≥ 7).\n\n| 글자 \\ 바탕 | bg-nav | bg-app | bg-surface | bg-sunken | bg-raised |\n| --- | --- | --- | --- | --- | --- |\n";
   const readTargets = { text: 12, "text-muted": 7, "text-subtle": 4.5 };
   for (const [k, target] of Object.entries(readTargets)) {
     md += `| \`${k}\` |`;
     for (const [bgName, bg] of Object.entries(bgs)) {
       const r = contrast(lin(k), bg.lin);
-      const t2 = ["bg-app", "bg-surface"].includes(bgName) ? target : 4.5;
+      const t2 = ["bg-nav", "bg-app", "bg-surface"].includes(bgName) ? target : 4.5;
       md += ` ${f1(r)} ${mark(r >= t2)} |`;
     }
     md += "\n";
   }
   md +=
-    "\n비활성 글자는 안내 글자보다 흐리고, 창 바탕·패널·조회 조건 위에서 2.5 이상입니다(WCAG 예외, 무엇인지는 읽혀야 합니다).\n\n| 글자 \\ 바탕 | bg-app | bg-surface | bg-sunken |\n| --- | --- | --- | --- |\n| `text-disabled` |";
-  for (const bg of ["bg-app", "bg-surface", "bg-sunken"]) {
+    "\n비활성 글자는 안내 글자보다 흐리고, 메뉴·본문 바탕·패널·bg-sunken 위에서 2.5 이상입니다(WCAG 예외, 무엇인지는 읽혀야 합니다).\n\n| 글자 \\ 바탕 | bg-nav | bg-app | bg-surface | bg-sunken |\n| --- | --- | --- | --- | --- |\n| `text-disabled` |";
+  for (const bg of ["bg-nav", "bg-app", "bg-surface", "bg-sunken"]) {
     const r = contrast(lin("text-disabled"), lin(bg));
     const dimmer = r < contrast(lin("text-subtle"), lin(bg));
     md += ` ${f1(r)} ${mark(r >= 2.5 && dimmer)} |`;
@@ -345,7 +354,7 @@ for (const [name, t] of Object.entries(themes)) {
   md += "\n";
 
   md +=
-    "\n### 의미색 글자 (패널, 조회 조건, 자기 옅은 면 위 ≥ 4.5)\n\n| 의미색 | bg-surface | bg-sunken | -soft (패널 위) |\n| --- | --- | --- | --- |\n";
+    "\n### 의미색 글자 (패널, bg-sunken, 자기 옅은 면 위 ≥ 4.5)\n\n| 의미색 | bg-surface | bg-sunken | -soft (패널 위) |\n| --- | --- | --- | --- |\n";
   for (const k of semantic) {
     const onSurface = contrast(lin(k), lin("bg-surface"));
     const onSunken = contrast(lin(k), lin("bg-sunken"));
@@ -362,7 +371,7 @@ for (const [name, t] of Object.entries(themes)) {
 
   md +=
     "\n### 상태 단계 (바탕 위에 얹은 결과의 OKLCH 명도 차이 ΔL)\n\n마우스 올림 < 누름 < 선택이고, 이웃 단계와 0.015 이상 차이 납니다.\n\n| 바탕 | bg-hover | bg-press | bg-selected |\n| --- | --- | --- | --- |\n";
-  for (const bg of ["bg-app", "bg-surface", "bg-sunken"]) {
+  for (const bg of ["bg-nav", "bg-app", "bg-surface", "bg-sunken"]) {
     const base = oklchL(lin(bg));
     const d = ["bg-hover", "bg-press", "bg-selected"].map((k) =>
       Math.abs(oklchL(over(t.tintBase, t.tint[k], c[bg])) - base),
@@ -372,14 +381,14 @@ for (const [name, t] of Object.entries(themes)) {
   }
 
   md +=
-    "\n### 글자가 아닌 표시 (≥ 3, WCAG 1.4.11)\n\n| 표시 | bg-app | bg-surface | bg-sunken |\n| --- | --- | --- | --- |\n";
+    "\n### 글자가 아닌 표시 (≥ 3, WCAG 1.4.11)\n\n| 표시 | bg-nav | bg-app | bg-surface | bg-sunken |\n| --- | --- | --- | --- | --- |\n";
   const nonText = [
     ["border-input (입력 칸 테두리)", (bg) => over(t.tintBase, t.tint["border-input"], bg)],
     ["brand-bar (활성 메뉴 표시선)", () => lin(t.brandBar)],
   ];
   for (const [label, fg] of nonText) {
     md += `| ${label} |`;
-    for (const bg of ["bg-app", "bg-surface", "bg-sunken"]) {
+    for (const bg of ["bg-nav", "bg-app", "bg-surface", "bg-sunken"]) {
       const r = contrast(fg(c[bg]), lin(bg));
       md += ` ${f1(r)} ${mark(r >= 3)} |`;
     }
@@ -387,10 +396,10 @@ for (const [name, t] of Object.entries(themes)) {
   }
 
   md +=
-    "\n### 참고: 구분선과 면 (기준 없음)\n\n| 표시 | bg-app | bg-surface | bg-sunken |\n| --- | --- | --- | --- |\n";
+    "\n### 참고: 구분선과 면 (기준 없음)\n\n| 표시 | bg-nav | bg-app | bg-surface | bg-sunken |\n| --- | --- | --- | --- | --- |\n";
   for (const k of ["border", "border-strong", "bg-hover", "bg-selected"]) {
     md += `| \`${k}\` (α ${t.tint[k]}) |`;
-    for (const bg of ["bg-app", "bg-surface", "bg-sunken"])
+    for (const bg of ["bg-nav", "bg-app", "bg-surface", "bg-sunken"])
       md += ` ${f1(contrast(over(t.tintBase, t.tint[k], c[bg]), lin(bg)))} |`;
     md += "\n";
   }

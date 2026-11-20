@@ -1,0 +1,67 @@
+/* 탭. 규칙: docs/design-guide.md '탭'. 모서리 0, 아래 구분선, 활성은 아래 2px 본문색 막대 */
+.tabs {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--gap-panel);
+  min-height: 0;
+}
+
+.list {
+  display: flex;
+  flex: none;
+  gap: var(--space-4);
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--control-height);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  cursor: default;
+  outline: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+/* 글자만 있는 탭은 마우스 올림 때 글자색만 바뀝니다 */
+.tab[data-hovered] {
+  color: var(--text);
+}
+
+.tab[data-selected] {
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+}
+
+.tab[data-selected]::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: calc(var(--border-width) * -1);
+  left: 0;
+  height: var(--border-width-state);
+  background: var(--text);
+}
+
+.tab[data-focus-visible] {
+  outline: var(--focus-width) solid var(--text);
+  outline-offset: var(--focus-offset);
+}
+
+.tab[data-disabled] {
+  color: var(--text-disabled);
+}
+
+.panel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--gap-panel);
+  min-height: 0;
+  outline: none;
+}

@@ -57,7 +57,8 @@ export default {
       "font-weight": [token("weight-"), "inherit"],
       "font-family": [token("font-"), "inherit"],
       "line-height": [token("leading-"), "1", "inherit"],
-      "/radius$/": [token("radius-"), "0", "50%", "inherit"],
+      // 모서리마다 다르게 줄 때도 토큰과 0만 씁니다(예: 0 var(--radius-md) var(--radius-md) 0)
+      "/radius$/": [/^((0|50%|var\(--radius-[a-z]+\))(\s+|$))+$/, "inherit"],
       "z-index": [token("z-"), /^calc\(var\(--z-/, "0", "1", "-1", "auto"],
     },
 

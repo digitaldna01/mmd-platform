@@ -1,0 +1,146 @@
+/* 앱 틀: 사이드 메뉴, 화면, 에이전트 패널. 규칙: docs/design-guide.md '화면 골격', '화면 배치 구간', '모션' */
+.shell {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--bg-app);
+}
+
+.navDock {
+  display: flex;
+  flex: none;
+  border-right: var(--border-width) solid var(--border);
+  overflow: hidden;
+}
+
+/* 다시 펼친 메뉴는 자리가 한 번에 바뀌고 내용만 밀려 들어옵니다(그리드는 한 번만 다시 배치) */
+.enter > * {
+  animation: from-left var(--duration-slow) var(--ease-out);
+}
+
+/* 본문 폭에 따른 배치(조회 조건 한 줄에 하나 등)는 이 컨테이너의 폭으로 정합니다 */
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  container: main / inline-size;
+}
+
+/* 에이전트 패널: 오른쪽에 붙고 그리드를 덮지 않습니다 */
+.dock {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  width: var(--dock-width);
+  background: var(--bg-surface);
+  border-left: var(--border-width) solid var(--border);
+  overflow: hidden;
+}
+
+.dockInner {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  animation: from-right var(--duration-slow) var(--ease-out);
+}
+
+/* 접힌 메뉴는 서랍: 막(2단계)을 깔고 왼쪽에서 덮어 열립니다 */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-dialog);
+  background: var(--scrim);
+  animation: fade-in var(--duration-slow) var(--ease-out);
+}
+
+.scrim[data-exiting] {
+  animation: fade-out var(--duration-slow) var(--ease-in);
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  border-right: var(--border-width) solid var(--border-strong);
+  box-shadow: var(--shadow-dialog);
+  outline: none;
+  animation: from-left var(--duration-slow) var(--ease-out);
+}
+
+.drawer[data-exiting] {
+  animation: to-left var(--duration-slow) var(--ease-in);
+}
+
+.drawerDialog {
+  display: flex;
+  outline: none;
+}
+
+@keyframes from-left {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes to-left {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes from-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+/* 동작 줄이기: 밀려 나오는 움직임을 없애고 서랍은 페이드만 합니다 */
+@media (prefers-reduced-motion: reduce) {
+  .enter > *,
+  .dockInner {
+    animation: none;
+  }
+
+  .drawer {
+    animation-name: fade-in;
+  }
+
+  .drawer[data-exiting] {
+    animation-name: fade-out;
+  }
+}
+
+/* 창 높이가 560px 미만이면 화면 전체를 스크롤합니다(그리드가 몇 줄로 납작해지지 않게) */
+@media (max-height: 559px) {
+  .shell {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .navDock {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+
+  .main {
+    overflow: visible;
+  }
+}

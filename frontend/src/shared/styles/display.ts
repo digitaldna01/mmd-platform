@@ -28,3 +28,46 @@ export function watchScreenSize(root: HTMLElement = document.documentElement): (
     screenEvents.removeEventListener?.("change", update);
   };
 }
+
+/** 테마: 시스템은 OS 설정을 따릅니다 */
+export type ThemePreference = "system" | "light" | "dark";
+/** 글자 크기 설정 */
+export type TextSize = "normal" | "large";
+
+export interface DisplaySettings {
+  theme: ThemePreference;
+  textSize: TextSize;
+}
+
+/**
+ * 브라우저에 기억하는 열쇠. 로그인이 생기면 사용자 설정(BE)으로 옮깁니다.
+ * 같은 PC를 여러 사람이 쓰면 마지막 사람의 설정이 남습니다.
+ */
+const STORAGE_KEY = "mmd.display";
+const DEFAULTS: DisplaySettings = { theme: "system", textSize: "normal" };
+
+/** 기억한 화면 설정. 없거나 읽을 수 없으면 기본값(시스템, 보통) */
+export function readDisplaySettings(): DisplaySettings {
+  try {
+    const saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? "{}") as Partial<DisplaySettings>;
+    return {
+      theme: saved.theme === "light" || saved.theme === "dark" ? saved.theme : "system",
+      textSize: saved.textSize === "large" ? "large" : "normal",
+    };
+  } catch {
+    return DEFAULTS;
+  }
+}
+
+/** `<html>`의 data-theme, data-text-size를 바꾸고 기억합니다. 규칙: docs/design-guide.md '토큰 파일과 Storybook' */
+export function applyDisplaySettings(settings: DisplaySettings, root: HTMLElement = document.documentElement): void {
+  if (settings.theme === "system") delete root.dataset.theme;
+  else root.dataset.theme = settings.theme;
+  if (settings.textSize === "large") root.dataset.textSize = "large";
+  else delete root.dataset.textSize;
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  } catch {
+    // 저장소를 쓸 수 없으면(개인 정보 보호 모드 등) 이번 창에서만 적용합니다
+  }
+}

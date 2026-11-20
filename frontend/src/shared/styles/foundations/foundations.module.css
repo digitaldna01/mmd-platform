@@ -579,13 +579,14 @@
   border-radius: var(--radius-lg);
 }
 
-.levelSunken {
+/* 조회 조건(패널 면) 위에서 드롭다운이 열린 모습 */
+.levelQuery {
   display: flex;
   gap: var(--gap-field-x);
   align-items: flex-start;
   min-height: 168px;
   padding: var(--pad-panel);
-  background: var(--bg-sunken);
+  background: var(--bg-surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-lg);
 }

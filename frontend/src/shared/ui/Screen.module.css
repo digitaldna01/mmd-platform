@@ -1,0 +1,66 @@
+/* 화면 안의 배치: 화면 머리, 탭, 조회 조건, 작업 영역. 규칙: docs/design-guide.md '화면 골격' */
+.screen {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--gap-panel);
+  min-height: 0;
+  padding: 0 var(--page-gutter) var(--page-gutter);
+}
+
+.header {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2);
+  padding-top: var(--pad-panel);
+}
+
+.titles {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-xl);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ID 줄: D2Coding text-xs 안내 글자, 가운데점으로 나눔 */
+.ids {
+  margin: 0;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 에이전트 표시: 아이콘 대신 2px 고리 */
+.ring {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+  border: var(--border-width-state) solid var(--agent);
+  border-radius: 50%;
+}
+
+/* 남은 높이를 채웁니다. 그리드 안만 스크롤합니다 */
+.work {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--gap-panel);
+  min-height: 0;
+}
+
+@media (max-height: 559px) {
+  .work {
+    min-height: calc(var(--row-height) * 12);
+  }
+}

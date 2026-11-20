@@ -12,12 +12,21 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const v = (token: string) => `var(--${token})`;
-const surfaces = ["bg-app", "bg-surface", "bg-sunken", "bg-raised"] as const;
+const surfaces = ["bg-nav", "bg-app", "bg-surface", "bg-sunken", "bg-raised"] as const;
 
 const backgrounds = [
-  { token: "bg-app", role: "창 바탕", use: "앱 전체 배경. 사이드 메뉴(--bg-nav)도 같은 값입니다." },
-  { token: "bg-surface", role: "패널", use: "그리드, 입력 영역, 카드, 입력 칸의 면" },
-  { token: "bg-sunken", role: "그리드 머리글", use: "조회 조건 패널, 그리드 머리글, 읽기 전용 칸" },
+  { token: "bg-nav", role: "메뉴", use: "사이드 메뉴. 본문 바탕보다 한 단계 어둡습니다. 활성 항목만 패널 면을 씁니다." },
+  {
+    token: "bg-app",
+    role: "본문 바탕",
+    use: "화면 제목과 탭 뒤, 조회 조건과 그리드 사이. 메뉴보다 밝고 패널보다 어둡습니다.",
+  },
+  { token: "bg-surface", role: "패널", use: "조회 조건, 그리드, 카드, 에이전트 패널, 입력 칸의 면" },
+  {
+    token: "bg-sunken",
+    role: "그리드 머리글",
+    use: "그리드 머리글, 읽기 전용 칸, 안내 배너. 라이트는 본문 바탕보다 어둡고, 다크는 패널보다 밝습니다.",
+  },
   {
     token: "bg-raised",
     role: "떠 있는 면",
@@ -41,7 +50,7 @@ export const Neutral: Story = {
   render: () => (
     <Page
       title="바탕과 글자"
-      lead="회색 단계를 OKLCH 명도로 정했습니다. 라이트는 LG Warm Grey와 같은 색상(85°)에 아주 약한 채도, 다크는 차가운 색상(250°)입니다. 순백과 순흑은 쓰지 않습니다."
+      lead="회색 단계를 OKLCH 명도로 정했습니다. 라이트와 다크 모두 차가운 색상(250°)에 아주 약한 채도입니다. 면은 메뉴, 본문 바탕, 패널 순서로 한 단계씩 밝습니다. 순백과 순흑은 쓰지 않습니다."
     >
       <Section title="바탕">
         <div className={styles.box}>
@@ -78,7 +87,7 @@ export const Neutral: Story = {
 
       <Section
         title="글자"
-        note="비활성 글자를 뺀 모든 글자는 네 바탕 위에서 4.5:1 이상입니다(WCAG 1.4.3). 본문과 보조 글자는 오래 읽는 창 바탕과 패널 위에서 더 높게 둡니다. 비활성 글자는 WCAG 예외라 2.5:1 이상이면서 안내 글자보다 흐리게 둡니다."
+        note="비활성 글자를 뺀 모든 글자는 다섯 바탕 위에서 4.5:1 이상입니다(WCAG 1.4.3). 본문과 보조 글자는 오래 읽는 메뉴, 본문 바탕, 패널 위에서 더 높게 둡니다. 비활성 글자는 WCAG 예외라 2.5:1 이상이면서 안내 글자보다 흐리게 둡니다."
       >
         <div className={styles.box}>
           <table className={styles.table}>
@@ -160,9 +169,10 @@ export const Tints: Story = {
                 <th>역할</th>
                 <th>토큰</th>
                 <th>지금 값</th>
-                <th>창 바탕 위</th>
+                <th>메뉴 위</th>
+                <th>본문 바탕 위</th>
                 <th>패널 위</th>
-                <th>조회 조건 위</th>
+                <th>그리드 머리글 위</th>
                 <th>쓰는 곳</th>
               </tr>
             </thead>
@@ -176,7 +186,7 @@ export const Tints: Story = {
                   <td>
                     <Value>{tokenValue(t.token)}</Value>
                   </td>
-                  {(["bg-app", "bg-surface", "bg-sunken"] as const).map((s) => (
+                  {(["bg-nav", "bg-app", "bg-surface", "bg-sunken"] as const).map((s) => (
                     <td key={s}>
                       <div className={styles.cellStack}>
                         <span className={styles.tintCell} style={{ background: v(s) }}>
@@ -291,7 +301,7 @@ export const Brand: Story = {
                 <th>견본</th>
                 <th>토큰</th>
                 <th>지금 값</th>
-                <th>창 바탕 위</th>
+                <th>메뉴 위</th>
                 <th>쓰는 곳</th>
               </tr>
             </thead>
@@ -312,7 +322,7 @@ export const Brand: Story = {
                     <Value>{tokenValue(b.token)}</Value>
                   </td>
                   <td>
-                    <Ratio value={contrast(v(b.token), v("bg-app"))} min={b.token === "brand-bar" ? 3 : undefined} />
+                    <Ratio value={contrast(v(b.token), v("bg-nav"))} min={b.token === "brand-bar" ? 3 : undefined} />
                   </td>
                   <td className={styles.muted}>{b.use}</td>
                 </tr>

@@ -88,15 +88,16 @@
 :root,
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg-app: #EFEEEC; /* oklch(0.95 0.003 85) */
-  --bg-surface: #FAFAF9; /* oklch(0.985 0.0015 85) */
-  --bg-sunken: #F1F0EE; /* oklch(0.955 0.003 85) */
-  --text-disabled: #8D8C8A; /* oklch(0.64 0.003 85) */
-  --text-subtle: #6A6967; /* oklch(0.52 0.003 85) */
-  --text-muted: #4E4D4B; /* oklch(0.42 0.003 85) */
-  --text: #222120; /* oklch(0.25 0.003 85) */
-  --primary-hover: #363534; /* oklch(0.33 0.003 85) */
-  --primary-press: #484746; /* oklch(0.4 0.003 85) */
+  --bg-app: #F5F7F9; /* oklch(0.975 0.003 250) */
+  --bg-surface: #FCFDFE; /* oklch(0.994 0.0015 250) */
+  --bg-sunken: #EFF0F2; /* oklch(0.955 0.003 250) */
+  --bg-nav: #EDEFF0; /* oklch(0.95 0.003 250) */
+  --text-disabled: #8B8C8E; /* oklch(0.64 0.003 250) */
+  --text-subtle: #68696B; /* oklch(0.52 0.003 250) */
+  --text-muted: #4C4D4F; /* oklch(0.42 0.003 250) */
+  --text: #212223; /* oklch(0.25 0.003 250) */
+  --primary-hover: #343537; /* oklch(0.33 0.003 250) */
+  --primary-press: #464849; /* oklch(0.4 0.003 250) */
   --positive: #137738; /* oklch(0.5 0.13 150) */
   --negative: #B63132; /* oklch(0.52 0.17 25) */
   --warning: #8D5E00; /* oklch(0.52 0.11 75) */
@@ -104,25 +105,24 @@
   --brand-heritage: #A50034; /* LG Heritage Red */
   --brand-active: #FD312E; /* LG Active Red */
   --bg-raised: var(--bg-surface);
-  --bg-nav: var(--bg-app);
   --primary: var(--text); /* 주요 버튼 면 */
   --on-primary: var(--bg-surface); /* 주요 버튼 글자 */
   --brand-bar: var(--brand-heritage); /* 로고 띠, 활성 메뉴 표시선 */
-  --border: rgb(20 18 14 / 0.13);
-  --border-strong: rgb(20 18 14 / 0.26);
-  --border-input: rgb(20 18 14 / 0.5);
-  --bg-hover: rgb(20 18 14 / 0.05);
-  --bg-press: rgb(20 18 14 / 0.09);
-  --bg-selected: rgb(20 18 14 / 0.13);
-  --bg-disabled: rgb(20 18 14 / 0.09);
+  --border: rgb(17 18 20 / 0.13);
+  --border-strong: rgb(17 18 20 / 0.26);
+  --border-input: rgb(17 18 20 / 0.5);
+  --bg-hover: rgb(17 18 20 / 0.05);
+  --bg-press: rgb(17 18 20 / 0.09);
+  --bg-selected: rgb(17 18 20 / 0.13);
+  --bg-disabled: rgb(17 18 20 / 0.09);
   --positive-soft: rgb(19 119 56 / 0.12);
   --negative-soft: rgb(182 49 50 / 0.12);
   --warning-soft: rgb(141 94 0 / 0.12);
   --agent-soft: rgb(108 74 179 / 0.12);
   --bg-warning: var(--warning-soft); /* 서버 목업 이름 */
-  --shadow-float: 0 4px 16px rgb(20 18 14 / 0.10);
-  --shadow-dialog: 0 12px 32px rgb(20 18 14 / 0.16);
-  --scrim: rgb(20 18 14 / 0.32);
+  --shadow-float: 0 4px 16px rgb(17 18 20 / 0.1);
+  --shadow-dialog: 0 12px 32px rgb(17 18 20 / 0.16);
+  --scrim: rgb(17 18 20 / 0.32);
 }
 
 /* 다크: OS를 따르되 data-theme="light"면 라이트, data-theme="dark"면 항상 다크 */
@@ -132,6 +132,7 @@
     --bg-app: #0C0F12; /* oklch(0.165 0.008 250) */
     --bg-surface: #14171B; /* oklch(0.205 0.008 250) */
     --bg-sunken: #1E2124; /* oklch(0.245 0.008 250) */
+    --bg-nav: #07090C; /* oklch(0.14 0.008 250) */
     --bg-raised: #282C2F; /* oklch(0.29 0.008 250) */
     --text-subtle: #8F9397; /* oklch(0.66 0.008 250) */
     --text-disabled: #66696D; /* oklch(0.52 0.008 250) */
@@ -145,7 +146,6 @@
     --agent: #B7A1F5; /* oklch(0.76 0.12 295) */
     --brand-heritage: #A50034; /* LG Heritage Red */
     --brand-active: #FD312E; /* LG Active Red */
-    --bg-nav: var(--bg-app);
     --primary: var(--text); /* 주요 버튼 면 */
     --on-primary: var(--bg-surface); /* 주요 버튼 글자 */
     --brand-bar: var(--brand-active); /* 로고 띠, 활성 메뉴 표시선 */
@@ -171,6 +171,7 @@
   --bg-app: #0C0F12; /* oklch(0.165 0.008 250) */
   --bg-surface: #14171B; /* oklch(0.205 0.008 250) */
   --bg-sunken: #1E2124; /* oklch(0.245 0.008 250) */
+  --bg-nav: #07090C; /* oklch(0.14 0.008 250) */
   --bg-raised: #282C2F; /* oklch(0.29 0.008 250) */
   --text-subtle: #8F9397; /* oklch(0.66 0.008 250) */
   --text-disabled: #66696D; /* oklch(0.52 0.008 250) */
@@ -184,7 +185,6 @@
   --agent: #B7A1F5; /* oklch(0.76 0.12 295) */
   --brand-heritage: #A50034; /* LG Heritage Red */
   --brand-active: #FD312E; /* LG Active Red */
-  --bg-nav: var(--bg-app);
   --primary: var(--text); /* 주요 버튼 면 */
   --on-primary: var(--bg-surface); /* 주요 버튼 글자 */
   --brand-bar: var(--brand-active); /* 로고 띠, 활성 메뉴 표시선 */

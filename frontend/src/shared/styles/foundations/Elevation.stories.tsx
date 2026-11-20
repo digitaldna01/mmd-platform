@@ -29,10 +29,10 @@ export const Elevation: Story = {
     >
       <Section
         title="0 평면, 1 떠 있음"
-        note="패널과 조회 조건은 그림자 없이 테두리로 구분합니다. 드롭다운은 떠 있는 면(--bg-raised) + 강한 테두리 + 그림자(라이트)입니다. 다크의 떠 있는 면은 조회 조건보다 밝아서 그 위에서도 묻히지 않습니다."
+        note="패널과 조회 조건은 그림자 없이 테두리로 구분합니다. 드롭다운은 떠 있는 면(--bg-raised) + 강한 테두리 + 그림자(라이트)입니다. 다크의 떠 있는 면은 가장 밝은 바탕(그리드 머리글, 읽기 전용 칸의 --bg-sunken)보다 밝아서 그 위에서도 묻히지 않습니다."
       >
         <div className={styles.stage}>
-          <div className={styles.levelSunken}>
+          <div className={styles.levelQuery}>
             <div className={styles.field} style={{ width: 220 }}>
               <span className={styles.fieldLabel}>공정</span>
               <span className={cx(styles.input, styles.inputOpen)}>

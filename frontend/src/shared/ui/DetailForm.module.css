@@ -1,0 +1,54 @@
+/* 상세 폼. 규칙: docs/design-guide.md '상세 폼' */
+.form {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--pad-panel);
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* 상세 폼만 있는 화면은 폼 폭을 960px까지로 둡니다 */
+.standalone {
+  width: 100%;
+  max-width: var(--form-max-width);
+}
+
+.head {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-md);
+}
+
+.target {
+  color: var(--text-muted);
+  font-weight: var(--weight-regular);
+}
+
+/* 칸은 180px 이상의 열로 채웁니다 */
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--form-column-min-width), 1fr));
+  gap: var(--gap-field-y) var(--gap-field-x);
+}
+
+/* 긴 칸(설명)은 두 열을 차지합니다 */
+.wide {
+  grid-column: span 2;
+  min-width: 0;
+}
+
+@container main (max-width: 639px) {
+  .wide {
+    grid-column: auto;
+  }
+}
+
+/* 버튼은 폼 아래 오른쪽에 취소(보조), 저장(주요) 순서 */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap-buttons);
+}

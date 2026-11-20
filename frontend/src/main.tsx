@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./app/App";
-import { watchScreenSize } from "./shared/styles/display";
+import { applyDisplaySettings, readDisplaySettings, watchScreenSize } from "./shared/styles/display";
 import "./shared/styles/global.css";
 
 const root = document.getElementById("root");
@@ -10,6 +10,7 @@ if (!root) {
 }
 
 watchScreenSize();
+applyDisplaySettings(readDisplaySettings());
 
 createRoot(root).render(
   <StrictMode>

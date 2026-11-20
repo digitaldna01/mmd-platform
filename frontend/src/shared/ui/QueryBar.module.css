@@ -1,0 +1,40 @@
+/* 조회 조건. 규칙: docs/design-guide.md '조회 조건'. 늘 펼쳐 두고 접지 않습니다 */
+.query {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--gap-field-y) var(--gap-field-x);
+  margin: 0;
+  padding: var(--pad-panel);
+  /* 그리드와 같은 패널 면. 본문 바탕보다 밝아 따로 놓인 판으로 보입니다 */
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+/* 칸 폭은 150~220px에서 내용에 맞춥니다 */
+.query > :not(.buttons) {
+  flex: 1 1 var(--query-field-min-width);
+  min-width: 0;
+  max-width: var(--query-field-max-width);
+}
+
+/* 조회·초기화는 마지막 칸 바로 뒤, 칸 줄(라벨 아래)에 맞춥니다 */
+.buttons {
+  display: flex;
+  gap: var(--gap-buttons);
+  padding-top: calc(var(--text-xs) * var(--leading-xs) + var(--gap-label));
+}
+
+/* 본문이 640px 미만이면 칸을 한 줄에 하나씩 놓습니다 */
+@container main (max-width: 639px) {
+  .query > :not(.buttons) {
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .buttons {
+    padding-top: 0;
+  }
+}

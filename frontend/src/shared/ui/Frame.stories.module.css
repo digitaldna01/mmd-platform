@@ -1,0 +1,89 @@
+/* 화면 틀 스토리의 그리드 자리(상용 그리드를 고르기 전 임시 그림) */
+.gridBox {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: calc(var(--row-height) * 6);
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.gridTools {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--pad-panel);
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+.gridTitle {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+}
+
+.count {
+  margin-left: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th {
+  position: sticky;
+  top: 0;
+  height: var(--row-height);
+  padding: 0 var(--pad-cell-x);
+  background: var(--bg-sunken);
+  border-bottom: var(--border-width) solid var(--border-strong);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.table td {
+  height: var(--row-height);
+  padding: 0 var(--pad-cell-x);
+  border-bottom: var(--border-width) solid var(--border);
+  white-space: nowrap;
+}
+
+.table .num {
+  text-align: right;
+}
+
+.statusBar {
+  display: flex;
+  flex: none;
+  justify-content: space-between;
+  padding: var(--space-1) var(--pad-panel);
+  border-top: var(--border-width) solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.dock {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding: var(--pad-float);
+  color: var(--text-subtle);
+  text-align: center;
+}

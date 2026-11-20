@@ -233,7 +233,7 @@
   gap: var(--gap-field-y) var(--gap-field-x);
   align-items: flex-end;
   padding: var(--pad-panel);
-  background: var(--bg-sunken);
+  background: var(--bg-surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-lg);
 }

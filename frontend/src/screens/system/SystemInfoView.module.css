@@ -1,10 +1,10 @@
 .panel {
-  padding: var(--page-gutter);
+  padding: var(--pad-panel);
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
 }
 
-.title {
-  margin: 0 0 var(--space-2);
-  font-size: var(--text-xl);
-  font-weight: var(--weight-bold);
-  line-height: var(--leading-xl);
+.version {
+  margin: 0;
 }

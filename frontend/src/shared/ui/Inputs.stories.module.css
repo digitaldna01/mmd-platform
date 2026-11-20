@@ -21,7 +21,7 @@
   align-items: flex-start;
   gap: var(--gap-field-y) var(--gap-field-x);
   padding: var(--pad-panel);
-  background: var(--bg-sunken);
+  background: var(--bg-surface);
   border: var(--border-width) solid var(--border);
   border-radius: var(--radius-lg);
 }
