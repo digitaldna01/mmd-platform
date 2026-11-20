@@ -89,6 +89,13 @@ input.control {
   cursor: default;
 }
 
+/* 짧은 값(Y/N)의 읽기 전용 칸은 내용에 맞춥니다 */
+.narrow {
+  justify-self: start;
+  width: auto;
+  min-width: calc(var(--control-height) * 2);
+}
+
 .readOnly:focus {
   outline: var(--border-width-state) solid var(--text);
   outline-offset: var(--focus-offset-inset);

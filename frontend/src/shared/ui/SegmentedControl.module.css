@@ -1,0 +1,97 @@
+/* 세그먼트. 규칙: docs/design-guide.md '세그먼트 버튼', '상호작용 상태'.
+   모든 칸은 가장 긴 글자의 폭을 따르고(같은 폭), 한 칸은 적어도 정사각형입니다 */
+.segment {
+  display: inline-grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  justify-self: start;
+  height: var(--control-height);
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.sm {
+  height: var(--control-height-sm);
+}
+
+.item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--control-height);
+  padding: 0 var(--pad-button-x);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  cursor: default;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.sm .item {
+  min-width: var(--control-height-sm);
+  padding: 0 var(--pad-button-x-sm);
+}
+
+.item + .item {
+  border-left: var(--border-width) solid var(--border-strong);
+}
+
+.item[data-hovered] {
+  background-color: var(--bg-hover);
+  color: var(--text);
+}
+
+.item[data-pressed] {
+  background-color: var(--bg-press);
+}
+
+/* 고른 칸은 주요 버튼 면 */
+.item[data-selected] {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.item[data-selected][data-hovered] {
+  background-color: var(--primary-hover);
+}
+
+.item[data-selected][data-pressed] {
+  background-color: var(--primary-press);
+}
+
+/* 키보드 포커스: 바깥은 묶음 테두리에 잘리므로 칸 안쪽에 그립니다 */
+.item[data-focus-visible] {
+  z-index: 1;
+  outline: var(--focus-width) solid var(--text);
+  outline-offset: var(--focus-offset-inset);
+}
+
+.item[data-selected][data-focus-visible] {
+  outline-color: var(--on-primary);
+  outline-offset: calc(var(--focus-width) * -2);
+}
+
+.item[data-disabled] {
+  background-color: transparent;
+  color: var(--text-disabled);
+}
+
+.item[data-disabled][data-selected] {
+  background-color: var(--bg-disabled);
+}
+
+/* 오류: 묶음 테두리를 negative로 */
+.root[data-invalid] .segment {
+  border-color: var(--negative);
+}
+
+.root[data-invalid] .item + .item {
+  border-left-color: var(--negative);
+}

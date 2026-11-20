@@ -1,0 +1,139 @@
+/* 체크박스와 라디오. 규칙: docs/design-guide.md '체크박스와 라디오'.
+   상태는 React Aria가 붙이는 속성(data-selected, data-indeterminate, data-hovered, data-pressed,
+   data-focus-visible, data-disabled, data-invalid)으로 그립니다 */
+
+/* 누를 수 있는 자리는 글자까지. 높이는 컨트롤이라 입력 칸과 같은 줄에 맞습니다 */
+.choice {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  color: var(--text);
+  font-size: var(--text-sm);
+  line-height: var(--leading-sm);
+  cursor: default;
+}
+
+/* 행 높이 상자 안(그리드, 목록) */
+.sm {
+  min-height: var(--row-height);
+}
+
+.box {
+  position: relative;
+  flex: none;
+  width: var(--check-size);
+  height: var(--check-size);
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border-input);
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.radio .box {
+  border-radius: 50%;
+}
+
+/* 체크(2px 선), 일부(가로줄), 라디오 점은 패널 색으로 */
+.mark {
+  position: absolute;
+  inset: calc(var(--border-width) * -1);
+  width: var(--check-size);
+  height: var(--check-size);
+  fill: none;
+  stroke: var(--on-primary);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.radio .mark {
+  fill: var(--on-primary);
+  stroke: none;
+}
+
+.choice[data-hovered] .box {
+  border-color: var(--text-muted);
+}
+
+/* 고르면 주요 버튼 면으로 채웁니다 */
+.choice[data-selected] .box,
+.choice[data-indeterminate] .box {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.choice[data-selected][data-hovered] .box,
+.choice[data-indeterminate][data-hovered] .box {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.choice[data-selected][data-pressed] .box,
+.choice[data-indeterminate][data-pressed] .box {
+  background: var(--primary-press);
+  border-color: var(--primary-press);
+}
+
+/* 키보드 포커스: 상자 바깥 2px 링 */
+.choice[data-focus-visible] .box {
+  outline: var(--focus-width) solid var(--text);
+  outline-offset: var(--focus-offset);
+}
+
+.choice[data-invalid] .box {
+  border-color: var(--negative);
+}
+
+/* 비활성: 면 없음 + 강한 테두리. 고른 상태는 비활성 면 + 비활성 글자색 표시 */
+.choice[data-disabled] {
+  color: var(--text-disabled);
+}
+
+.choice[data-disabled] .box {
+  background: transparent;
+  border-color: var(--border-strong);
+}
+
+.choice[data-disabled][data-selected] .box,
+.choice[data-disabled][data-indeterminate] .box {
+  background: var(--bg-disabled);
+  border-color: transparent;
+}
+
+.choice[data-disabled] .mark {
+  stroke: var(--text-disabled);
+}
+
+.radio[data-disabled] .mark {
+  fill: var(--text-disabled);
+}
+
+/* ---------- 라디오 묶음: 세로로 쌓고, 선택지마다 설명 ---------- */
+.group {
+  display: grid;
+  justify-items: start;
+}
+
+.withDescription {
+  align-items: flex-start;
+  padding: var(--space-1) 0;
+}
+
+/* 상자를 첫 줄 글자 가운데에 맞춥니다 */
+.withDescription .box {
+  margin-top: calc((var(--text-sm) * var(--leading-sm) - var(--check-size)) / 2);
+}
+
+.description {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-xs);
+}
+
+.choice[data-disabled] .description {
+  color: var(--text-disabled);
+}

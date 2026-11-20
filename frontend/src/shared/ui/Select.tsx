@@ -1,4 +1,4 @@
-import { type ReactElement, useId } from "react";
+import type { ReactElement } from "react";
 import {
   Autocomplete,
   Button,
@@ -14,7 +14,7 @@ import {
 } from "react-aria-components";
 import { Icon } from "../icons/Icon";
 import field from "./field.module.css";
-import { cx, FieldLabel, FieldMessages } from "./FieldParts";
+import { cx, FieldLabel, FieldMessages, ReadOnlyField } from "./FieldParts";
 import styles from "./Select.module.css";
 
 /** 항목이 이보다 많으면 목록 위에 검색 칸을 둡니다 */
@@ -195,35 +195,18 @@ function ItemText({ item }: { item: SelectItem }) {
   );
 }
 
-/** 읽기 전용: 고를 수 없으므로 목록 없이 값만 가라앉은 칸에 보입니다. 포커스와 복사는 됩니다 */
+/** 읽기 전용: 고를 수 없으므로 목록 없이 값만 가라앉은 칸에 보입니다 */
 function ReadOnlySelect({ label, items, value, emptyLabel, required = false, placeholder = "선택" }: SelectProps) {
-  const labelId = useId();
   const selected = items.find((item) => item.value === value);
   return (
-    <div className={field.field}>
-      <span id={labelId} className={field.label}>
-        {label}
-        {required && (
-          <span className={field.required} aria-hidden="true">
-            {" *"}
-          </span>
+    <ReadOnlyField label={label} required={required}>
+      <span className={styles.value}>
+        {selected ? (
+          <ItemText item={selected} />
+        ) : (
+          (emptyLabel ?? <span className={styles.placeholder}>{placeholder}</span>)
         )}
       </span>
-      <div
-        className={cx(field.control, field.readOnly)}
-        role="textbox"
-        aria-readonly="true"
-        aria-labelledby={labelId}
-        tabIndex={0}
-      >
-        <span className={styles.value}>
-          {selected ? (
-            <ItemText item={selected} />
-          ) : (
-            (emptyLabel ?? <span className={styles.placeholder}>{placeholder}</span>)
-          )}
-        </span>
-      </div>
-    </div>
+    </ReadOnlyField>
   );
 }

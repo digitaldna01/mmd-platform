@@ -6,6 +6,7 @@ import { Button } from "./Button";
 import styles from "./Inputs.stories.module.css";
 import { Select, type SelectItem } from "./Select";
 import { TextInput } from "./TextInput";
+import { type YesNo, YesNoField } from "./YesNoField";
 
 const meta = {
   title: "컴포넌트/입력창과 선택 상자",
@@ -49,11 +50,6 @@ const partNumbers: SelectItem[] = Array.from({ length: 40 }, (_, i) => ({
   name: modelNames[i % modelNames.length] ?? "",
   meta: i % 9 === 4 ? "사용 안 함" : undefined,
 }));
-
-const yesNo: SelectItem[] = [
-  { value: "Y", name: "예" },
-  { value: "N", name: "아니요" },
-];
 
 const noop = () => {};
 
@@ -201,7 +197,7 @@ function QueryBar() {
 function DetailForm() {
   const [name, setName] = useState("");
   const [plant, setPlant] = useState<string | null>("P9");
-  const [required, setRequired] = useState<string | null>("Y");
+  const [requiredYn, setRequiredYn] = useState<YesNo | null>("Y");
   const [parent, setParent] = useState<string | null>(null);
   const [memo, setMemo] = useState("조립 라인 기본 Route");
   const [tried, setTried] = useState(false);
@@ -222,7 +218,7 @@ function DetailForm() {
         <TextInput label="Route" code readOnly value="RT-0102" onChange={noop} />
         <TextInput label="Route 이름" required value={name} onChange={setName} error={nameError} />
         <Select label="공장" required items={plants} value={plant} onChange={setPlant} />
-        <Select label="추가할 때 필수공정" required items={yesNo} value={required} onChange={setRequired} />
+        <YesNoField label="필수공정여부" required value={requiredYn} onChange={setRequiredYn} />
         <Select
           label="상위 Route"
           emptyLabel="없음"

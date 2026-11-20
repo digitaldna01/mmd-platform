@@ -55,6 +55,7 @@ npm ci
 - `tokens.css`는 `scripts/build-tokens.mjs`가 만듭니다. 손으로 고치지 않고, 값을 바꿀 때는 디자인 가이드와 스크립트를 함께 고친 뒤 `npm run tokens`를 실행합니다.
 - 버튼은 `shared/ui/Button`으로만 씁니다. `<button>`을 직접 쓰지 않습니다. 비활성은 `disabledReason`, 처리 중은 `busy`, 아이콘만 있는 버튼은 `icon`과 `label`로 만듭니다. Storybook '컴포넌트/버튼'에 쓰는 법과 놓는 자리가 있습니다.
 - 입력창은 `shared/ui/TextInput`, 선택 상자는 `shared/ui/Select`로만 씁니다. `<input>`, `<select>`, `<textarea>`를 직접 쓰지 않습니다. 비워도 되는 선택 상자는 `emptyLabel`(조회 조건 '전체', 폼 '없음')을 줍니다. Storybook '컴포넌트/입력창과 선택 상자'에 조회 조건과 상세 폼 예가 있습니다.
+- DB에 저장하는 Y/N 값(사용여부 등)은 `shared/ui/YesNoField`(세그먼트 `Y | N`)로 받습니다. 체크박스로 받지 않습니다. 체크박스(`Checkbox`)는 저장하지 않는 옵션과 여러 개 고르기에만, 짧은 선택지 2~4개는 `SegmentedControl`, 선택지마다 설명이 필요하면 `RadioGroup`을 씁니다.
 - React Aria(`react-aria-components`)는 `shared/ui` 안에서만 가져옵니다. 화면에 필요한 컴포넌트가 없으면 `shared/ui`에 감싼 컴포넌트를 먼저 만듭니다(ADR-0007).
 - `npm test`의 `shared/ui/boundaries.test.ts`가 위 두 규칙(직접 쓴 `<button>`·`<input>`·`<select>`·`<textarea>`, `shared/ui` 밖의 React Aria)을 검사합니다.
 - 툴팁은 `shared/ui/Tooltip`으로, 기다림 표시는 `shared/ui/useDelayedBusy`와 `Spinner`로 씁니다.
