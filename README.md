@@ -25,6 +25,8 @@
 - MCP 서버: [docs/adr/0005-mcp-server.md](docs/adr/0005-mcp-server.md)
 - 컨테이너 배포: [docs/adr/0006-container-deployment.md](docs/adr/0006-container-deployment.md)
 - 반입 목록: [docs/import-list.md](docs/import-list.md)
+- 디자인 가이드: [docs/design-guide.md](docs/design-guide.md)
+- 디자인 시스템을 다른 레포에 옮기기: [docs/design-system-apply.md](docs/design-system-apply.md)
 
 ## 실행
 
@@ -98,6 +100,11 @@ cd frontend && npm run check:api            # FE 코드 생성과 타입 체크
 - [ ] `deploy/compose`를 띄우고 `check-failover.sh`로 무중단 확인 (베이스 이미지는 [사내 레지스트리](deploy/README.md) 사용)
 - [ ] `CLAUDE.md`의 `modernizer/` 경로와 명세 위치 기입
 - [ ] 기존 사내 프로젝트의 패키지 규칙이 `com.lgdisplay.mmd`와 맞는지 확인
+
+**디자인 시스템**
+
+- [ ] 서버 목업 레포에 디자인 시스템 적용 ([적용 안내](docs/design-system-apply.md))
+- [ ] 회사 모니터에서 라이트·다크 색 확인 (야간 모드 끄고)
 
 **TIBRV 연동**
 

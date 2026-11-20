@@ -15,6 +15,7 @@
 - 컨테이너 배포 결정: `docs/adr/0006-container-deployment.md`
 - 입력 컴포넌트 동작 라이브러리 결정: `docs/adr/0007-headless-ui-library.md`
 - 디자인 규칙과 토큰: `docs/design-guide.md`
+- 디자인 시스템을 다른 레포(서버 목업 등)에 옮기는 순서: `docs/design-system-apply.md`
 - 배포 방법: `deploy/README.md`
 - 화면 만드는 순서: `frontend/README.md`
 - 반입 목록: `docs/import-list.md` (의존성을 추가할 때 함께 갱신)
