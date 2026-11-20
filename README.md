@@ -95,6 +95,7 @@ cd frontend && npm run check:api            # FE 코드 생성과 타입 체크
 
 - [ ] 맨 위 안내대로 clone하고 원격을 사내 Git으로 변경
 - [ ] JDK 21, Node.js 26 설치
+- [ ] 커밋 전 디자인 검사 켜기: `git config core.hooksPath .githooks` ([자동 검사](docs/design-system-apply.md))
 - [ ] Maven Central, npm, `services.gradle.org`, `plugins.gradle.org` 접속 확인 (안 되면 [반입 목록](docs/import-list.md) 기준으로 사내 저장소에 반입)
 - [ ] 위 "실행"의 테스트 명령이 통과하는지 확인
 - [ ] `deploy/compose`를 띄우고 `check-failover.sh`로 무중단 확인 (베이스 이미지는 [사내 레지스트리](deploy/README.md) 사용)

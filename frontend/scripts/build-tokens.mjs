@@ -380,6 +380,19 @@ for (const [name, t] of Object.entries(themes)) {
     md += `| \`${bg}\` | ${d[0].toFixed(3)} | ${d[1].toFixed(3)} | ${d[2].toFixed(3)} ${mark(ok)} |\n`;
   }
 
+  // 면 순서: 면을 같은 값으로 만들어 구분이 사라지는 것을 막습니다(design-guide.md '뉴트럴')
+  md +=
+    "\n### 면 순서 (OKLCH 명도 차이 ΔL ≥ 0.015)\n\n메뉴 < 본문 바탕 < 패널 순서로 밝고, 그리드 머리글 단계(bg-sunken)는 본문 바탕, 패널과 구분됩니다. 다크의 떠 있는 면은 가장 밝은 바탕보다 밝습니다.\n\n| 비교 | ΔL |\n| --- | --- |\n";
+  const lightness = (k) => oklchL(c[k].lin);
+  const steps = [
+    ["bg-nav → bg-app (밝아짐)", lightness("bg-app") - lightness("bg-nav")],
+    ["bg-app → bg-surface (밝아짐)", lightness("bg-surface") - lightness("bg-app")],
+    ["bg-sunken ↔ bg-app", Math.abs(lightness("bg-sunken") - lightness("bg-app"))],
+    ["bg-sunken ↔ bg-surface", Math.abs(lightness("bg-sunken") - lightness("bg-surface"))],
+  ];
+  if (t.raised === "bg-raised") steps.push(["bg-sunken → bg-raised (밝아짐)", lightness("bg-raised") - lightness("bg-sunken")]);
+  for (const [label, d] of steps) md += `| ${label} | ${d.toFixed(3)} ${mark(d >= 0.015)} |\n`;
+
   md +=
     "\n### 글자가 아닌 표시 (≥ 3, WCAG 1.4.11)\n\n| 표시 | bg-nav | bg-app | bg-surface | bg-sunken |\n| --- | --- | --- | --- | --- |\n";
   const nonText = [
@@ -425,8 +438,8 @@ if (check) {
   console.log(`wrote ${out.css}\nwrote ${out.report}`);
 }
 if (failures) {
-  console.error(`✗ 대비 기준 ${failures}곳 미달 (tokens-report.md)`);
+  console.error(`✗ 대비·면 순서 기준 ${failures}곳 미달 (tokens-report.md)`);
   process.exitCode = 1;
 } else if (!check) {
-  console.log("대비 기준 모두 통과");
+  console.log("대비·면 순서 기준 모두 통과");
 }

@@ -1,0 +1,5 @@
+#!/bin/sh
+# 커밋 전 디자인 검사. 올린(staged) FE 파일이 있으면 토큰, 아이콘, CSS, 경계 테스트를 돌립니다.
+# clone한 뒤 한 번만 설정합니다: git config core.hooksPath .githooks
+# 쓰는 법: docs/design-system-apply.md '자동 검사'
+exec node "$(git rev-parse --show-toplevel)/.claude/hooks/design-check.mjs" --pre-commit

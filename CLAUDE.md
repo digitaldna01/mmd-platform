@@ -30,6 +30,7 @@
 - FE 테스트: `cd frontend && npm test`
 - FE 빌드: `cd frontend && npm run build`
 - FE CSS 검사: `cd frontend && npm run lint:css` (빌드에 포함)
+- 디자인 자동 검사: `.claude/hooks/design-check.mjs`가 파일을 고친 뒤와 끝내기 전에 돕니다. 걸리면 검사를 끄거나 기준을 낮추지 말고 고칩니다. 맞는 값이 없으면 사용자에게 묻습니다
 - Storybook: `cd frontend && npm run storybook`
 - 전체 실행: `cd deploy/compose && docker compose up -d --build --wait`
 - 무중단 검증: `deploy/compose/check-failover.sh`

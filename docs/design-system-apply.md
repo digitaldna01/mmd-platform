@@ -139,6 +139,30 @@ npm run build-storybook
 
 Storybook '기초/색' 페이지의 값이 이 레포와 같은지 봅니다. 라이트 기준 메뉴 `#EDEFF0`, 본문 바탕 `#F5F7F9`, 패널 `#FCFDFE`, 그리드 머리글 `#EFF0F2`입니다. 도구 막대에서 다크, 글자 크게, 넓은 모니터도 바꿔 봅니다.
 
+### 5-5. 자동 검사
+
+서버의 Claude(Claude Code)가 파일을 고칠 때와 사람이 커밋할 때 같은 검사가 저절로 돌게 합니다. 모델이 검사를 잊어도 걸립니다. 무엇을 검사하는지는 디자인 가이드 'CSS 검사'의 '자동 검사' 표에 있습니다.
+
+| 이 레포 | 대상 레포 | 주의 |
+| --- | --- | --- |
+| `.claude/hooks/design-check.mjs` | 레포 루트의 `.claude/hooks/design-check.mjs` | 고치지 않습니다. FE 폴더(`scripts/build-tokens.mjs`가 있는 곳)를 `frontend/`와 레포 루트에서 스스로 찾습니다. 다른 폴더면 파일 위쪽의 후보 목록(`["frontend", "."]`)에만 더합니다 |
+| `.claude/settings.json` | 레포 루트의 `.claude/settings.json` | 이미 있으면 `hooks`의 `PreToolUse`, `PostToolUse`, `Stop` 항목을 합칩니다 |
+| `.githooks/pre-commit` | 레포 루트의 `.githooks/pre-commit` | 실행 권한을 줍니다(`chmod +x .githooks/pre-commit`) |
+
+5-3의 npm 스크립트(`tokens:check`, `icons:check`, `lint:css`, `test`)와 Node.js가 있어야 합니다. 스크립트는 Node 기본 모듈만 써서 Windows, WSL, Linux에서 같게 돕니다.
+
+켜기
+
+1. clone한 곳마다 한 번 실행합니다. `git config core.hooksPath .githooks`. 이미 다른 git 훅 도구(husky 등)를 쓰면 그 커밋 전 훅에서 `node .claude/hooks/design-check.mjs --pre-commit`을 부릅니다.
+2. Claude Code에서 `/hooks`를 열어 세 훅이 보이는지 확인합니다. 안 보이면 Claude Code를 다시 시작합니다. 회사 관리 설정이 프로젝트 훅을 막고 있으면 관리자에게 묻습니다.
+3. 시험합니다. 아무 화면 CSS에 `color: #fff;`를 넣어 저장하게 하면 Claude Code가 'CSS 검사에 걸렸습니다'를 받아야 합니다. 그 상태로 `git commit`을 하면 커밋이 멈춰야 합니다. 확인한 뒤 되돌립니다.
+
+걸렸을 때
+
+- 검사를 끄지 않습니다. `stylelint-disable`, 훅 설정 지우기, `git commit --no-verify`를 쓰지 않고, 스크립트의 기준 숫자를 낮추지 않습니다.
+- 필요한 토큰이 없거나 기준에 맞는 값을 찾지 못하면 멈추고 사용자에게 묻습니다.
+- 끝내기 전과 커밋 전 검사는 npm 스크립트를 그대로 부릅니다. 6단계에서 검사 범위를 좁혀 두었다면 같은 범위를 따릅니다. 고친 뒤 검사는 고친 파일 하나만 봅니다. 아직 옮기지 않은 화면을 고쳤다면 그 파일은 그 자리에서 규칙에 맞춥니다.
+
 ## 6. 기존 화면 옮기기
 
 ### 순서
@@ -204,6 +228,7 @@ CSS 검사와 `shared/ui/boundaries.test.ts`(직접 쓴 `<button>`, `<input>`, `
 - [ ] 창 폭 1600, 1280, 900에서 메뉴가 가이드 '화면 골격'대로 펼쳐지거나 서랍이 됩니다.
 - [ ] 라이트, 다크, 글자 크게에서 대표 화면을 봅니다.
 - [ ] 회사 모니터에서 노란빛이나 푸른빛이 도는지 봅니다. Night Shift, True Tone, Windows 야간 모드는 끄고 봅니다.
+- [ ] Claude Code `/hooks`에 디자인 검사 훅 세 개가 보이고, `git config core.hooksPath`가 `.githooks`입니다(5-5).
 
 ## 9. 아직 정하지 않은 것
 
@@ -230,6 +255,7 @@ docs/design-system-apply.md의 5-2(파일 복사)만 해 줘.
 - ErrorNotice.tsx와 Feedback.stories.tsx의 오류 타입 import만 우리 레포의 오류 타입으로 바꿔.
 - 끝나면 5-4의 명령을 실행하고 결과를 그대로 보여 줘.
 - 문서에 없는 값이나 모양이 필요하면 만들지 말고 멈춰서 물어 봐.
+- 디자인 검사 훅이 막으면 이유를 읽고 고쳐. 검사를 끄거나 기준을 낮추지 마.
 ```
 
 ```text
@@ -237,4 +263,5 @@ docs/design-system-apply.md 6단계에 따라 '<화면 이름>' 화면 하나만
 - '목업에서 바꿀 것' 표를 이 화면에 하나씩 대 보고, 바꾼 것과 해당 없는 것을 목록으로 보여 줘.
 - 색, 크기, 간격은 tokens.css의 변수만 써. 없는 토큰은 만들지 말고 물어 봐.
 - 끝나면 npm run build와 npm test 결과를 보여 줘.
+- 디자인 검사 훅이 막으면 이유를 읽고 고쳐. 검사를 끄거나 기준을 낮추지 마.
 ```
