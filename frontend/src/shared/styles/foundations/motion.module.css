@@ -1,0 +1,406 @@
+/* '기초/모션' 스토리의 그림입니다. 모션 토큰과 규칙을 직접 눌러 보게 합니다. */
+
+.stage {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  background: var(--bg-app);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.toolbar {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  left: var(--space-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.anchor {
+  position: relative;
+}
+
+.btn {
+  display: inline-flex;
+  gap: var(--gap-inline);
+  align-items: center;
+  justify-content: center;
+  height: var(--control-height);
+  padding: 0 var(--pad-button-x);
+  background-color: transparent;
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font: var(--weight-medium) var(--text-sm) / 1 var(--font-sans);
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.secondary {
+  background-color: var(--bg-surface);
+  border-color: var(--border-strong);
+}
+
+/* 면이 있는 요소: 투명도 면을 겹친 층의 opacity로 바꿔 전환되게 합니다 */
+.secondary {
+  position: relative;
+}
+
+.secondary::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--bg-hover);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  content: "";
+}
+
+.secondary:hover::before {
+  opacity: 1;
+}
+
+.primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.ghost {
+  color: var(--text-muted);
+}
+
+.ghost:hover {
+  background-color: var(--bg-hover);
+  color: var(--text);
+}
+
+.square {
+  width: var(--control-height);
+  padding: 0;
+}
+
+.small {
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
+}
+
+/* ---------- 떠 있는 것: 150ms 페이드 ---------- */
+.pop {
+  position: absolute;
+  z-index: var(--z-popover);
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity var(--duration-normal) var(--ease-in),
+    visibility 0s linear var(--duration-normal);
+}
+
+.open {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    visibility 0s;
+}
+
+.dropdown {
+  top: calc(100% + var(--space-1));
+  left: 0;
+  width: 200px;
+  padding: var(--space-1);
+  background: var(--bg-raised);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+}
+
+.option {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  height: var(--row-height);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-md);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.option:hover {
+  background-color: var(--bg-hover);
+}
+
+.tooltip {
+  top: calc(100% + var(--space-1));
+  left: 0;
+  width: max-content;
+  padding: var(--space-1) var(--space-2);
+  background: var(--bg-raised);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-float);
+  font-size: var(--text-xs);
+}
+
+.scrim {
+  inset: 0;
+  z-index: var(--z-dialog);
+  background: var(--scrim);
+}
+
+.dialog {
+  top: 50%;
+  left: 50%;
+  z-index: calc(var(--z-dialog) + 1);
+  display: grid;
+  gap: var(--space-2);
+  width: 300px;
+  padding: var(--pad-float);
+  background: var(--bg-raised);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-dialog);
+  transform: translate(-50%, -50%);
+}
+
+.dialog b {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+}
+
+.dialog p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.foot {
+  display: flex;
+  gap: var(--gap-buttons);
+  justify-content: flex-end;
+}
+
+.toast {
+  right: var(--space-3);
+  bottom: var(--space-3);
+  z-index: var(--z-toast);
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  background: var(--bg-raised);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+}
+
+.toast b {
+  font-weight: var(--weight-semibold);
+}
+
+.positive {
+  color: var(--positive);
+}
+
+/* ---------- 서랍: 200ms 밀려 나옴 ---------- */
+.drawer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: calc(var(--z-dialog) + 1);
+  display: grid;
+  gap: 2px;
+  align-content: start;
+  width: 200px;
+  padding: var(--space-3) var(--space-2);
+  visibility: hidden;
+  background: var(--bg-nav);
+  border-right: var(--border-width) solid var(--border-strong);
+  box-shadow: var(--shadow-dialog);
+  transform: translateX(-100%);
+  transition:
+    transform var(--duration-slow) var(--ease-in),
+    visibility 0s linear var(--duration-slow);
+}
+
+.drawerOpen {
+  visibility: visible;
+  transform: none;
+  transition:
+    transform var(--duration-slow) var(--ease-out),
+    visibility 0s;
+}
+
+.drawer span {
+  display: flex;
+  align-items: center;
+  height: var(--control-height);
+  padding: 0 var(--space-2);
+  color: var(--text-muted);
+}
+
+/* ---------- 레이아웃: 자리는 바로, 들어오는 패널만 밀려 들어옴 ---------- */
+.layout {
+  position: relative;
+  display: flex;
+  height: 240px;
+  overflow: hidden;
+  background: var(--bg-app);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.layoutNav {
+  flex: none;
+  width: 160px;
+  padding: var(--space-3) var(--space-2);
+  overflow: hidden;
+  background: var(--bg-nav);
+  border-right: var(--border-width) solid var(--border);
+  color: var(--text-muted);
+}
+
+.layoutMain {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-3);
+  overflow: hidden;
+}
+
+.layoutDock {
+  flex: none;
+  width: 220px;
+  overflow: hidden;
+  background: var(--bg-surface);
+  border-left: var(--border-width) solid var(--border);
+}
+
+.slideRight {
+  animation: in-right var(--duration-slow) var(--ease-out);
+}
+
+.slideLeft {
+  animation: in-left var(--duration-slow) var(--ease-out);
+}
+
+@keyframes in-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes in-left {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+.dockHead {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  height: 40px;
+  padding: 0 var(--space-3);
+  border-bottom: var(--border-width) solid var(--border);
+  font-weight: var(--weight-semibold);
+}
+
+.ring {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  border: var(--border-width-state) solid var(--agent);
+  border-radius: 50%;
+}
+
+/* ---------- 기다림 ---------- */
+.gridBox {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.gridBox td {
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.loading td {
+  opacity: 0.4;
+}
+
+.loadMark {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-raised);
+  border: var(--border-width) solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-float);
+  color: var(--text-muted);
+  transform: translate(-50%, -50%);
+}
+
+.spin {
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  flex: none;
+  animation: spin 0.8s linear infinite;
+}
+
+.spin circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 44 100;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.log {
+  min-height: 1.4em;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+/* 동작 줄이기: 밀려 나오는 움직임을 없앱니다. 스피너는 계속 돕니다 */
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .drawerOpen {
+    transform: none;
+    transition: visibility 0s;
+  }
+
+  .slideRight,
+  .slideLeft {
+    animation: none;
+  }
+}

@@ -1,0 +1,33 @@
+/* 앱과 Storybook이 함께 불러오는 전역 스타일입니다. 컴포넌트 스타일은 CSS Modules에 씁니다. */
+@import "./fonts.css";
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-app);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-sm);
+  /* macOS에서 어두운 바탕의 밝은 글자가 굵어 보이지 않게 합니다. Windows에는 영향이 없습니다 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 한국어 문단은 단어 단위로 줄을 바꿉니다 */
+p {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* 키보드 포커스 기본값: 바깥 2px 본문색 링. 입력 칸과 그리드 셀은 컴포넌트에서 안쪽으로 바꿉니다 */
+:focus-visible {
+  outline: var(--focus-width) solid var(--text);
+  outline-offset: var(--focus-offset);
+}

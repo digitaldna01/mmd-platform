@@ -1,0 +1,561 @@
+/* '기초/화면 골격' 스토리의 그림입니다. 앱 틀을 실제 창 크기로 그리고 줄여서 보여 줍니다.
+   실제 앱 틀(AppShell)을 만들 때 이 구간 규칙을 그대로 옮깁니다. */
+
+/* 그리드 칸 안에서 틀(1920px 등)의 폭에 끌려 늘어나지 않게 합니다 */
+.stageWrap {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.stage {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 0 var(--border-width) var(--border-strong);
+}
+
+.frame {
+  container: app / size;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-app);
+  transform-origin: top left;
+}
+
+.shell {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+/* ---------- 사이드 메뉴 ---------- */
+.nav {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: var(--nav-width);
+  min-height: 0;
+  padding: var(--space-3) var(--space-2);
+  overflow-y: auto;
+  background: var(--bg-nav);
+  border-right: var(--border-width) solid var(--border);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  height: var(--control-height);
+  padding: 0 var(--space-2);
+  box-shadow: inset var(--border-width-state) 0 0 var(--brand-bar);
+  font: var(--weight-bold) var(--text-lg) / 1 var(--font-brand);
+}
+
+.grow {
+  flex: 1;
+}
+
+.navGroup {
+  display: grid;
+  gap: 2px;
+}
+
+.navLabel {
+  margin-bottom: var(--space-1);
+  padding: 0 var(--space-2);
+  color: var(--text-subtle);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  height: var(--control-height);
+  padding: 0 var(--space-2);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.navItem:hover {
+  background-image: linear-gradient(var(--bg-hover), var(--bg-hover));
+  color: var(--text);
+}
+
+.navItemOn {
+  background-color: var(--bg-surface);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  box-shadow:
+    inset var(--border-width-state) 0 0 var(--brand-bar),
+    0 0 0 var(--border-width) var(--border);
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+}
+
+.legacyId {
+  margin-left: var(--space-1);
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-regular);
+}
+
+.settings {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-2) 0;
+  border-top: var(--border-width) solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.user {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  color: var(--text);
+  font-size: var(--text-sm);
+}
+
+/* ---------- 본문 ---------- */
+.main {
+  container: main / inline-size;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.scroller {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--gap-panel);
+  min-height: 0;
+  padding: 0 var(--page-gutter) var(--page-gutter);
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  flex: none;
+  gap: var(--space-2);
+  align-items: center;
+  padding-top: var(--pad-panel);
+}
+
+.titles {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-xl);
+  white-space: nowrap;
+}
+
+.ids {
+  overflow: hidden;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ring {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  border: var(--border-width-state) solid var(--agent);
+  border-radius: 50%;
+}
+
+.btn {
+  display: inline-flex;
+  flex: none;
+  gap: var(--gap-inline);
+  align-items: center;
+  justify-content: center;
+  height: var(--control-height);
+  padding: 0 var(--pad-button-x);
+  background-color: transparent;
+  border: var(--border-width) solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font: var(--weight-medium) var(--text-sm) / 1 var(--font-sans);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background-image: linear-gradient(var(--bg-hover), var(--bg-hover));
+}
+
+.primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.secondary {
+  background-color: var(--bg-surface);
+  border-color: var(--border-strong);
+}
+
+.ghost {
+  color: var(--text-muted);
+}
+
+.square {
+  width: var(--control-height);
+  padding: 0;
+}
+
+.small {
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
+}
+
+.menuButton {
+  display: none;
+  margin-left: calc(var(--space-2) * -1);
+}
+
+.query {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: var(--gap-field-y) var(--gap-field-x);
+  align-items: flex-end;
+  padding: var(--pad-panel);
+  background: var(--bg-sunken);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.field {
+  display: grid;
+  flex: 1 1 150px;
+  gap: var(--gap-label);
+  max-width: 220px;
+  min-width: 0;
+}
+
+.field > span {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+}
+
+.input {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  height: var(--control-height);
+  padding: 0 var(--pad-input-x);
+  overflow: hidden;
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border-input);
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+}
+
+.input > :last-child {
+  margin-left: auto;
+  color: var(--text-muted);
+}
+
+.buttons {
+  display: flex;
+  gap: var(--gap-buttons);
+}
+
+@container main (max-width: 639px) {
+  .field {
+    flex-basis: 100%;
+    max-width: none;
+  }
+}
+
+/* ---------- 작업 영역 ---------- */
+.work {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.gridBox {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--bg-surface);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.toolbar {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--pad-panel);
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+.toolbar b {
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+}
+
+.count {
+  margin-left: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.gridScroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.grid {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.grid th {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  height: var(--row-height);
+  padding: 0 var(--pad-cell-x);
+  background: var(--bg-sunken);
+  border-bottom: var(--border-width) solid var(--border-strong);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.grid td {
+  height: var(--row-height);
+  padding: 0 var(--pad-cell-x);
+  border-bottom: var(--border-width) solid var(--border);
+  white-space: nowrap;
+}
+
+.grid .num {
+  text-align: right;
+}
+
+.splitter {
+  display: grid;
+  flex: none;
+  place-items: center;
+  height: var(--gap-panel);
+  cursor: row-resize;
+}
+
+.splitter i {
+  width: 32px;
+  height: 4px;
+  background: var(--border-strong);
+  border-radius: 2px;
+}
+
+.dual {
+  display: flex;
+  flex: 1;
+  gap: var(--gap-panel);
+  min-height: 0;
+}
+
+.dualSource {
+  flex: 2 1 0;
+}
+
+.dualTarget {
+  flex: 5 1 0;
+}
+
+.dualMiddle {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+@container main (max-width: 899px) {
+  .dual {
+    flex-direction: column;
+  }
+
+  .dualMiddle {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+}
+
+/* ---------- 에이전트 패널 (자리만) ---------- */
+.dock {
+  display: none;
+  flex: none;
+  flex-direction: column;
+  width: var(--dock-width);
+  background: var(--bg-surface);
+  border-left: var(--border-width) solid var(--border);
+}
+
+.dockHead {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  height: 48px;
+  padding: 0 var(--space-2) 0 var(--pad-panel);
+  border-bottom: var(--border-width) solid var(--border);
+}
+
+.dockBody {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding: var(--pad-float);
+  color: var(--text-subtle);
+  text-align: center;
+}
+
+.frame[data-agent="open"] .dock {
+  display: flex;
+}
+
+/* ---------- 서랍 ---------- */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-dialog);
+  display: none;
+  background: var(--scrim);
+}
+
+.drawer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: calc(var(--z-dialog) + 1);
+  display: none;
+  box-shadow: var(--shadow-dialog);
+}
+
+.drawer .nav {
+  height: 100%;
+}
+
+.frame[data-drawer="open"] .scrim,
+.frame[data-drawer="open"] .drawer {
+  display: block;
+}
+
+/* 모션: 서랍과 들어오는 에이전트 패널만 200ms 밀려 나오고, 막은 150ms 페이드. 자리는 한 번에 바뀝니다 */
+.frame[data-drawer="open"] .drawer {
+  animation: in-left var(--duration-slow) var(--ease-out);
+}
+
+.frame[data-drawer="open"] .scrim {
+  animation: fade-in var(--duration-normal) var(--ease-out);
+}
+
+.frame[data-agent="open"] .dock > * {
+  animation: in-right var(--duration-slow) var(--ease-out);
+}
+
+@keyframes in-left {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes in-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame[data-drawer="open"] .drawer,
+  .frame[data-agent="open"] .dock > * {
+    animation: none;
+  }
+}
+
+/* ---------- 구간 규칙 ----------
+   메뉴가 서랍이 되는 경우: 사용자가 접음, 창 폭 1024 미만, 에이전트를 열었고 창 폭 1440 미만 */
+.frame[data-menu="closed"] .shell > .nav {
+  display: none;
+}
+
+.frame[data-menu="closed"] .menuButton {
+  display: inline-flex;
+}
+
+@container app (max-width: 1439px) {
+  .frame[data-agent="open"] .shell > .nav {
+    display: none;
+  }
+
+  .frame[data-agent="open"] .menuButton {
+    display: inline-flex;
+  }
+}
+
+@container app (max-width: 1023px) {
+  .shell > .nav {
+    display: none;
+  }
+
+  .menuButton {
+    display: inline-flex;
+  }
+}
+
+/* 창 높이 560 미만: 그리드 안 대신 화면 전체 스크롤 */
+@container app (max-height: 559px) {
+  .scroller {
+    overflow: auto;
+  }
+
+  .work,
+  .dual,
+  .gridBox {
+    flex: none;
+  }
+
+  .gridBox {
+    overflow: visible;
+  }
+
+  .gridScroll {
+    overflow: visible;
+  }
+}

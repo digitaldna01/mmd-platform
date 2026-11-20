@@ -18,6 +18,9 @@
 | TanStack Query | 5.106.1 | FE 서버 상태 | 5 |
 | Storybook | 10.6.5 | 컴포넌트 개발 | 5 |
 | Vitest, jsdom, Testing Library | 5.1.0, 31.0.0, 16.3.3 | FE 테스트 | 5 |
+| Pretendard | 1.3.9 | FE 기본 글꼴 (SIL OFL) | 5 |
+| D2Coding | 1.3.2 | FE 고정폭 글꼴 (SIL OFL) | 5 |
+| Fluent UI System Icons (`@fluentui/svg-icons`) | 1.1.345 | FE 아이콘 원본, 개발 의존성 (MIT) | 5 |
 | Spring AI | 2.0.2 | MCP 서버 | 8 |
 | OpenAPI Generator 플러그인 | 7.27.0 | BE 호출용 Java 클라이언트 생성 | 8 |
 

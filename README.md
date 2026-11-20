@@ -108,7 +108,7 @@ cd frontend && npm run check:api            # FE 코드 생성과 타입 체크
 **미확정 결정**
 
 - [ ] 레거시 MDI 구조와 사용자의 화면 배치 습관 확인 후 화면 배치 방식 결정
-- [ ] 상용 그리드 선정 후 디자인 값과 UI 라이브러리 결정 (`frontend/src/shared/styles/tokens.css`)
+- [ ] 상용 그리드 선정 후 그리드 테마를 디자인 토큰에 맞추고 UI 라이브러리 결정 ([디자인 가이드](docs/design-guide.md))
 - [ ] 지원 브라우저 확정
 - [ ] 운영 로드밸런서에 readiness 연결 ([멈춘 인스턴스 감지 한계](docs/adr/0006-container-deployment.md))
 - [ ] MCP 서버 인증 방식 결정 (사용자별 OAuth 또는 서비스 계정). 인증 전에는 외부에 노출하지 않음

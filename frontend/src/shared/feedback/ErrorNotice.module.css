@@ -1,7 +1,7 @@
 .notice {
-  padding: var(--space-4);
-  color: var(--color-danger);
-  background: var(--color-danger-bg);
+  padding: var(--pad-panel);
+  color: var(--negative);
+  background: var(--negative-soft);
 }
 
 .message {
@@ -10,6 +10,6 @@
 
 .traceId {
   margin: 0 0 var(--space-2);
-  color: var(--color-muted);
-  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
 }

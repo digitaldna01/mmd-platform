@@ -1,19 +1,197 @@
-/* 임시 값입니다. 상용 그리드와 디자인을 정하면 이 값을 바꿉니다. */
+/* scripts/build-tokens.mjs가 만듭니다. 손으로 고치지 않습니다. 실행: npm run tokens */
+/* 규칙: docs/design-guide.md. 대비 검사 결과: tokens-report.md */
+
 :root {
-  --color-text: #1f2933;
-  --color-muted: #616e7c;
-  --color-danger: #b42318;
-  --color-danger-bg: #fef3f2;
-  --space-2: 8px;
-  --space-4: 16px;
-  --font-size-sm: 12px;
-  --font-size-md: 14px;
-  --font-size-lg: 18px;
+  /* 글꼴 (design-guide.md '서체') */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-mono: D2Coding, Consolas, "Malgun Gothic", monospace;
+  --font-brand: "LG EI Text", "Pretendard Variable", Pretendard, "Malgun Gothic", sans-serif;
+  /* 영문과 숫자가 섞인 코드 칸에만: 빗금 0. 숫자 칸은 font-variant-numeric: tabular-nums만 */
+  --code-features: "zero" 1;
+
+  --weight-regular: 400; --weight-medium: 500; --weight-semibold: 600; --weight-bold: 700;
+  --leading-xs: 1.4; --leading-sm: 1.5; --leading-md: 1.6; --leading-lg: 1.4; --leading-xl: 1.3; --leading-2xl: 1.3;
+
+  /* 크기 조정 단계: 모니터 보정 +1, 글자 크기 '크게' +2, 둘 다 +3 */
+  --size-step: 0;
+
+  /* 간격: 기본 단계 (4px 단위). 화면과 컴포넌트는 아래 쓰임 토큰을 씁니다 */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px;
+  --gap-inline: var(--space-1);   /* 아이콘과 글자 */
+  --gap-label: var(--space-1);    /* 라벨과 입력창 */
+  --pad-input-x: var(--space-2);  /* 입력창 안 좌우 */
+  --pad-cell-x: var(--space-2);   /* 그리드 셀 안 좌우 */
+  --pad-button-x: var(--space-3); /* 버튼 안 좌우 */
+  --pad-button-x-sm: var(--space-2); /* 작은 버튼 안 좌우 */
+  --gap-buttons: var(--space-2);  /* 같은 묶음의 버튼 사이 */
+  --gap-field-x: var(--space-3);  /* 조회 조건과 폼의 칸 사이 (가로) */
+  --gap-field-y: var(--space-2);  /* 조회 조건과 폼의 칸 사이 (세로) */
+  --pad-panel: var(--space-3);    /* 작업 패널 안: 조회 조건, 툴바, 상세 폼 */
+  --pad-float: var(--space-4);    /* 떠 있는 상자 안: 다이얼로그, 토스트 */
+  --gap-panel: var(--space-3);    /* 패널 사이 */
+  --page-gutter: var(--space-4);  /* 화면 가장자리 */
+  --pad-empty: var(--space-6);    /* 빈 상태 안 */
+
+  /* 모서리: 배지·체크박스 3, 한 줄짜리 컨트롤과 막대 4, 여러 요소를 담는 상자 6. 알약형 없음 */
+  --radius-sm: 3px; --radius-md: 4px; --radius-lg: 6px;
+
+  /* 테두리 굵기: 구조 1px, 상태(포커스, 열린 칸, 현재 위치 막대) 2px */
+  --border-width: 1px; --border-width-state: 2px;
+  /* 포커스: 버튼·탭·링크는 바깥 2px, 그리드 셀과 입력 칸은 안쪽. 색은 본문색. box-shadow를 쓰지 않습니다 */
+  --focus-width: 2px; --focus-offset: 2px; --focus-offset-inset: -1px;
+
+  /* 아이콘: 그림이 그려진 크기(12, 16, 24)에 맞춥니다. 글자 크기 '크게'에서만 한 단계 큰 그림(16, 20, 28)으로 건너뜁니다 */
+  --icon-size-sm: 12px; --icon-size-md: 16px; --icon-size-lg: 24px;
+
+  /* 화면 골격: 사이드 메뉴, 에이전트 도킹 패널, 상세 폼의 최대 폭. 구간(1440, 1024, 900, 640, 높이 560)은 컨테이너 쿼리에 숫자로 씁니다 */
+  --nav-width: 232px; --dock-width: 360px; --form-max-width: 960px;
+
+  /* 모션: 화면이 바뀐 것을 알릴 때만. 상태 색 80ms, 떠 있는 것의 페이드 150ms, 서랍과 들어오는 패널 200ms */
+  --duration-fast: 80ms; --duration-normal: 150ms; --duration-slow: 200ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1); /* 나타날 때, 상태 색 */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);  /* 사라질 때 */
+
+  /* 층 순서 */
+  --z-sticky: 10; --z-dock: 20; --z-popover: 30; --z-dialog: 40; --z-toast: 50;
 }
 
-body {
-  margin: 0;
-  color: var(--color-text);
-  font-family: system-ui, sans-serif;
-  font-size: var(--font-size-md);
+/* 모니터 보정은 앱이 data-screen을, 글자 크기 설정은 data-text-size를 <html>에 붙입니다 */
+:root[data-screen="wide"] { --size-step: 1; }
+:root[data-text-size="large"] { --size-step: 2; --icon-size-sm: 16px; --icon-size-md: 20px; --icon-size-lg: 28px; }
+:root[data-screen="wide"][data-text-size="large"] { --size-step: 3; }
+
+/* 글자, 행, 컨트롤, 배지 크기. 간격은 바뀌지 않습니다 */
+:root {
+  --text-xs: calc(12px + var(--size-step) * 1px);
+  --text-sm: calc(13px + var(--size-step) * 1px);
+  --text-md: calc(14px + var(--size-step) * 1px);
+  --text-lg: calc(16px + var(--size-step) * 1px);
+  --text-xl: calc(20px + var(--size-step) * 1px);
+  --text-2xl: calc(24px + var(--size-step) * 1px);
+  --row-height: calc(28px + var(--size-step) * 2px);
+  --control-height: calc(32px + var(--size-step) * 2px);
+  --badge-height: calc(20px + var(--size-step) * 2px);
+  --check-size: calc(16px + var(--size-step) * 1px);
+  --control-height-sm: var(--row-height); /* 작은 컨트롤: 행 높이 상자 안에서만 */
+}
+
+/* 라이트: 기본이고, OS가 라이트일 때 */
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg-app: #EFEEEC; /* oklch(0.95 0.003 85) */
+  --bg-surface: #FAFAF9; /* oklch(0.985 0.0015 85) */
+  --bg-sunken: #F1F0EE; /* oklch(0.955 0.003 85) */
+  --text-disabled: #8D8C8A; /* oklch(0.64 0.003 85) */
+  --text-subtle: #6A6967; /* oklch(0.52 0.003 85) */
+  --text-muted: #4E4D4B; /* oklch(0.42 0.003 85) */
+  --text: #222120; /* oklch(0.25 0.003 85) */
+  --primary-hover: #363534; /* oklch(0.33 0.003 85) */
+  --primary-press: #484746; /* oklch(0.4 0.003 85) */
+  --positive: #137738; /* oklch(0.5 0.13 150) */
+  --negative: #B63132; /* oklch(0.52 0.17 25) */
+  --warning: #8D5E00; /* oklch(0.52 0.11 75) */
+  --agent: #6C4AB3; /* oklch(0.5 0.16 295) */
+  --brand-heritage: #A50034; /* LG Heritage Red */
+  --brand-active: #FD312E; /* LG Active Red */
+  --bg-raised: var(--bg-surface);
+  --bg-nav: var(--bg-app);
+  --primary: var(--text); /* 주요 버튼 면 */
+  --on-primary: var(--bg-surface); /* 주요 버튼 글자 */
+  --brand-bar: var(--brand-heritage); /* 로고 띠, 활성 메뉴 표시선 */
+  --border: rgb(20 18 14 / 0.13);
+  --border-strong: rgb(20 18 14 / 0.26);
+  --border-input: rgb(20 18 14 / 0.5);
+  --bg-hover: rgb(20 18 14 / 0.05);
+  --bg-press: rgb(20 18 14 / 0.09);
+  --bg-selected: rgb(20 18 14 / 0.13);
+  --bg-disabled: rgb(20 18 14 / 0.09);
+  --positive-soft: rgb(19 119 56 / 0.12);
+  --negative-soft: rgb(182 49 50 / 0.12);
+  --warning-soft: rgb(141 94 0 / 0.12);
+  --agent-soft: rgb(108 74 179 / 0.12);
+  --bg-warning: var(--warning-soft); /* 서버 목업 이름 */
+  --shadow-float: 0 4px 16px rgb(20 18 14 / 0.10);
+  --shadow-dialog: 0 12px 32px rgb(20 18 14 / 0.16);
+  --scrim: rgb(20 18 14 / 0.32);
+}
+
+/* 다크: OS를 따르되 data-theme="light"면 라이트, data-theme="dark"면 항상 다크 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg-app: #0C0F12; /* oklch(0.165 0.008 250) */
+    --bg-surface: #14171B; /* oklch(0.205 0.008 250) */
+    --bg-sunken: #1E2124; /* oklch(0.245 0.008 250) */
+    --bg-raised: #282C2F; /* oklch(0.29 0.008 250) */
+    --text-subtle: #8F9397; /* oklch(0.66 0.008 250) */
+    --text-disabled: #66696D; /* oklch(0.52 0.008 250) */
+    --text-muted: #AAAEB3; /* oklch(0.75 0.008 250) */
+    --text: #E1E3E5; /* oklch(0.915 0.004 250) */
+    --primary-hover: #CCCED0; /* oklch(0.85 0.004 250) */
+    --primary-press: #B9BBBD; /* oklch(0.79 0.004 250) */
+    --positive: #6FC884; /* oklch(0.76 0.13 150) */
+    --negative: #FF847D; /* oklch(0.75 0.15 25) */
+    --warning: #E3B25A; /* oklch(0.79 0.12 80) */
+    --agent: #B7A1F5; /* oklch(0.76 0.12 295) */
+    --brand-heritage: #A50034; /* LG Heritage Red */
+    --brand-active: #FD312E; /* LG Active Red */
+    --bg-nav: var(--bg-app);
+    --primary: var(--text); /* 주요 버튼 면 */
+    --on-primary: var(--bg-surface); /* 주요 버튼 글자 */
+    --brand-bar: var(--brand-active); /* 로고 띠, 활성 메뉴 표시선 */
+    --border: rgb(255 255 255 / 0.08);
+    --border-strong: rgb(255 255 255 / 0.16);
+    --border-input: rgb(255 255 255 / 0.36);
+    --bg-hover: rgb(255 255 255 / 0.04);
+    --bg-press: rgb(255 255 255 / 0.07);
+    --bg-selected: rgb(255 255 255 / 0.1);
+    --bg-disabled: rgb(255 255 255 / 0.07);
+    --positive-soft: rgb(111 200 132 / 0.14);
+    --negative-soft: rgb(255 132 125 / 0.14);
+    --warning-soft: rgb(227 178 90 / 0.14);
+    --agent-soft: rgb(183 161 245 / 0.14);
+    --bg-warning: var(--warning-soft); /* 서버 목업 이름 */
+    --shadow-float: none;
+    --shadow-dialog: none;
+    --scrim: rgb(0 0 0 / 0.5);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-app: #0C0F12; /* oklch(0.165 0.008 250) */
+  --bg-surface: #14171B; /* oklch(0.205 0.008 250) */
+  --bg-sunken: #1E2124; /* oklch(0.245 0.008 250) */
+  --bg-raised: #282C2F; /* oklch(0.29 0.008 250) */
+  --text-subtle: #8F9397; /* oklch(0.66 0.008 250) */
+  --text-disabled: #66696D; /* oklch(0.52 0.008 250) */
+  --text-muted: #AAAEB3; /* oklch(0.75 0.008 250) */
+  --text: #E1E3E5; /* oklch(0.915 0.004 250) */
+  --primary-hover: #CCCED0; /* oklch(0.85 0.004 250) */
+  --primary-press: #B9BBBD; /* oklch(0.79 0.004 250) */
+  --positive: #6FC884; /* oklch(0.76 0.13 150) */
+  --negative: #FF847D; /* oklch(0.75 0.15 25) */
+  --warning: #E3B25A; /* oklch(0.79 0.12 80) */
+  --agent: #B7A1F5; /* oklch(0.76 0.12 295) */
+  --brand-heritage: #A50034; /* LG Heritage Red */
+  --brand-active: #FD312E; /* LG Active Red */
+  --bg-nav: var(--bg-app);
+  --primary: var(--text); /* 주요 버튼 면 */
+  --on-primary: var(--bg-surface); /* 주요 버튼 글자 */
+  --brand-bar: var(--brand-active); /* 로고 띠, 활성 메뉴 표시선 */
+  --border: rgb(255 255 255 / 0.08);
+  --border-strong: rgb(255 255 255 / 0.16);
+  --border-input: rgb(255 255 255 / 0.36);
+  --bg-hover: rgb(255 255 255 / 0.04);
+  --bg-press: rgb(255 255 255 / 0.07);
+  --bg-selected: rgb(255 255 255 / 0.1);
+  --bg-disabled: rgb(255 255 255 / 0.07);
+  --positive-soft: rgb(111 200 132 / 0.14);
+  --negative-soft: rgb(255 132 125 / 0.14);
+  --warning-soft: rgb(227 178 90 / 0.14);
+  --agent-soft: rgb(183 161 245 / 0.14);
+  --bg-warning: var(--warning-soft); /* 서버 목업 이름 */
+  --shadow-float: none;
+  --shadow-dialog: none;
+  --scrim: rgb(0 0 0 / 0.5);
 }
